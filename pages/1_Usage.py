@@ -1,5 +1,7 @@
 import streamlit as st
-import base64
+#import base64
+
+st.set_page_config(page_title='Test App', page_icon='🎵', layout='wide')
 
 st.title('Usage')
 
