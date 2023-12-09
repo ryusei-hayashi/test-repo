@@ -1,0 +1,13 @@
+tensorflow-probability
+tensorflow
+statistics
+streamlit
+requests
+spotipy
+librosa
+yt-dlp
+base64
+pandas
+numpy
+
+
