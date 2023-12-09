@@ -12,8 +12,7 @@ import numpy
 
 st.set_page_config(page_title='Game Music Retriever', page_icon=':musical_note:')
 
-yd = YoutubeDL({'outtmpl': 'music', 'playlist_items': '1', 'format': 'bestaudio/best', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3', 'preferredquality': '192'}], 'overwrites': True})
-
+yd = YoutubeDL({'outtmpl': 'music', 'playlist_items': '1', 'format': 'mp3/bestaudio/best', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'overwrites': True})
 sp = spotipy.Spotify(spotipy.oauth2.SpotifyClientCredentials(st.secrets['id'], st.secrets['pw']))
 sr = 22050
 fps = 25
