@@ -12,7 +12,7 @@ Input music to be used in the created game. Choose input method from YoutubeDL, 
 Input the scene of input music. Valence and Arousal are based on [Circumplex model](https://en.wikipedia.org/wiki/Emotion_classification#Circumplex_model).
 
 #### Scene of Output Music
-Same as "Scene of Input Music"
+Input the scene of Output music. Valence and Arousal are based on [Circumplex model](https://en.wikipedia.org/wiki/Emotion_classification#Circumplex_model).
 
 ### System
 
