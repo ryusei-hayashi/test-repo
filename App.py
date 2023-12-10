@@ -13,6 +13,9 @@ import numpy
 
 st.set_page_config(page_title='Test App', page_icon=':musical_note:', layout='wide')
 
+if st.sidebar.button('Clear Cache'):
+   st.cache_data.clear()
+
 yd = YoutubeDL({'outtmpl': 'tmp', 'playlist_items': '1', 'format': 'mp3/bestaudio/best', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'overwrites': True})
 sp = spotipy.Spotify(auth_manager=spotipy.oauth2.SpotifyClientCredentials(st.secrets['id'], st.secrets['pw']))
 sr = 22050
@@ -36,7 +39,7 @@ def load_np(i, o):
 @st.cache_data(ttl='10m')
 def get_mp3(n):
     try:
-        if m == 'YouTubeDL':
+        if m == 'YoutubeDL':
             yd.download([n])
         elif m == 'Spotify API':
             open('tmp.mp3', 'wb').write(requests.get(f'{sp.track(n.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
@@ -205,14 +208,11 @@ V = load_np('1uk-5RoYT1T5WZU2heh_yadM6b8Qku1rO', 'vad.npy')
 Z = load_np('1CcuvRC1I8AnxTU_TBE8I9zxgVIM6OFYQ', 'vec.npy')
 U = load_np('1GrN1M3-ejwQM-WxryIClLpPvsmsKUp7w', 'url.npy')
 
-if st.sidebar.button('Clear Cache'):
-   st.cache_data.clear()
-
 st.title('Test App')
 st.write('Test App retrieves music that has both the worldview of the game and the atmosphere of the scene.')
 
 st.subheader('Input Music')
-m = st.selectbox('Input Method', ['YouTubeDL', 'Spotify API', 'Audiostock', 'Uploader'])
+m = st.selectbox('Input Method', ['YoutubeDL', 'Spotify API', 'Audiostock', 'Uploader'])
 if m == 'Uploader':
     n = st.file_uploader('Upload File')
 else:
