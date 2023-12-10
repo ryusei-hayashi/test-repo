@@ -22,18 +22,18 @@ seq = 256
 z_n = 32
 x_n = 1024
 
-@st.cache_resource(max_entries=2)
+@st.cache_resource(max_entries=1)
 def load_h5(i, o):
     m = VAE()
     m(tf.random.normal([1, x_n, seq, 1]))
     m.load_weights(download(id=i, output=o, quiet=False))
     return m
 
-@st.cache_data(max_entries=5)
+@st.cache_data(ttl='10m')
 def load_np(i, o):
     return numpy.load(download(id=i, output=o, quiet=False), allow_pickle=True).item()
 
-@st.cache_data(max_entries=2)
+@st.cache_data(max_entries=1)
 def get_mp3(n):
     try:
         if m == 'YouTubeDL':
@@ -48,11 +48,11 @@ def get_mp3(n):
     except:
         st.error(f'Error: Unable to access the URL')
 
-@st.cache_data(max_entries=3)
+@st.cache_data(max_entries=2)
 def filter(s, v, a):
     return [k for k in Z if all(i in S[k] for i in s) and v[0] < V[k][0] < v[1] and a[0] < V[k][1] < a[1]]
 
-@st.cache_data(max_entries=3)
+@st.cache_data(max_entries=2)
 def center(K):
     return numpy.mean(numpy.array([Z[k] for k in K]), axis=0)
     
@@ -204,6 +204,9 @@ S = load_np('12Rjd8eSTxq5d2_P2OMulRWxt8jwz0H9R', 'scn.npy')
 V = load_np('1uk-5RoYT1T5WZU2heh_yadM6b8Qku1rO', 'vad.npy')
 Z = load_np('1CcuvRC1I8AnxTU_TBE8I9zxgVIM6OFYQ', 'vec.npy')
 U = load_np('1GrN1M3-ejwQM-WxryIClLpPvsmsKUp7w', 'url.npy')
+
+if st.sidebar.button('Cache Clear'):
+   st.cache_data.clear()
 
 st.title('Test App')
 st.write('Test App retrieves music that has both the worldview of the game and the atmosphere of the scene.')
