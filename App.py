@@ -46,7 +46,7 @@ def get_mp3(n):
             open('tmp.mp3', 'wb').write(n.getbuffer())
         st.audio('tmp.mp3')
     except:
-        st.error(f'Error: Unable to access {n}')
+        st.error(f'Error: Unable to access the URL')
 
 @st.cache_data
 def filter(s, v, a):
@@ -245,8 +245,11 @@ with r:
 
 st.subheader('Output Music')
 if st.button('Retrieve'):
-    P = filter(sim + tim + wim + bim + pim + qim + aim, vim, zim)
-    Q = filter(som + tom + wom + bom + pom + qom + aom, vom, zom)
-    z = M.get_z(collate(['tmp.mp3']))[0] + center(Q) - center(P)
-    D = pandas.DataFrame([U[k] for k in sorted(Q, key=lambda k: numpy.linalg.norm(Z[k]-z))[:99]], columns=['URL', 'Name', 'Artist', 'Time'])
-    st.dataframe(D, column_config={'URL': st.column_config.LinkColumn()})
+    try:
+        P = filter(sim + tim + wim + bim + pim + qim + aim, vim, zim)
+        Q = filter(som + tom + wom + bom + pom + qom + aom, vom, zom)
+        z = M.get_z(collate(['tmp.mp3']))[0] + center(Q) - center(P)
+        D = pandas.DataFrame([U[k] for k in sorted(Q, key=lambda k: numpy.linalg.norm(Z[k]-z))[:99]], columns=['URL', 'Name', 'Artist', 'Time'])
+        st.dataframe(D, column_config={'URL': st.column_config.LinkColumn()})
+    except:
+        st.error(f'Error: No music to fit the condition')
