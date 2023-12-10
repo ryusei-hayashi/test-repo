@@ -37,16 +37,16 @@ def load_np(i, o):
     return numpy.load(download(id=i, output=o, quiet=False), allow_pickle=True).item()
 
 @st.cache_data(ttl='10m')
-def get_mp3(n):
+def get_mp3(s):
     try:
-        if m == 'YoutubeDL':
+        if w == 'YoutubeDL':
             yd.download([n])
-        elif m == 'Spotify API':
-            open('tmp.mp3', 'wb').write(requests.get(f'{sp.track(n.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
-        elif m == 'Audiostock':
-            open('tmp.mp3', 'wb').write(requests.get(f'{n}/play.mp3').content)
-        elif m == 'Uploader':
-            open('tmp.mp3', 'wb').write(n.getbuffer())
+        elif w == 'Spotify API':
+            open('tmp.mp3', 'wb').write(requests.get(f'{sp.track(s.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
+        elif w == 'Audiostock':
+            open('tmp.mp3', 'wb').write(requests.get(f'{s}/play.mp3').content)
+        elif w == 'Uploader':
+            open('tmp.mp3', 'wb').write(s.getbuffer())
         st.audio('tmp.mp3')
     except:
         st.error(f'Error: Unable to access the URL')
@@ -212,13 +212,13 @@ st.title('Test App')
 st.write('Test App retrieves music that has both the worldview of the game and the atmosphere of the scene.')
 
 st.subheader('Input Music')
-m = st.selectbox('Input Method', ['YoutubeDL', 'Spotify API', 'Audiostock', 'Uploader'])
-if m == 'Uploader':
-    n = st.file_uploader('Upload File')
+w = st.selectbox('Input Way', ['YoutubeDL', 'Spotify API', 'Audiostock', 'Uploader'])
+if w == 'Uploader':
+    s = st.file_uploader('Upload File')
 else:
-    n = st.text_input('Input URL')
-if n:
-    get_mp3(n)
+    s = st.text_input('Input URL')
+if s:
+    get_mp3(s)
 
 l, r = st.columns(2, gap='medium')
 
