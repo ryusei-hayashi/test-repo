@@ -15,7 +15,17 @@ Input the scene of input music. Valence and Arousal are based on [Circumplex mod
 Input the scene of output music. Valence and Arousal are based on [Circumplex model](https://en.wikipedia.org/wiki/Emotion_classification#Circumplex_model).
 
 ### System
-First, the system converts the input music to the coordinate z in AI. Second, the system computes the center p of the scene of input music. Similarly, the system computes the center q of the scene of output music. Third, the system moves the coordinate z in the direction of the vector q - p. Finally, the system retrieves music close to the moved coordinate z.
+#### Input Music
+The system converts the input music to the coordinate z in AI.
+
+#### Scene of Input Music
+The system computes the center p of the scene of input music.
+
+#### Scene of Output Music
+The system computes the center q of the scene of output music. 
+
+#### Output Music
+The system moves the coordinate z in the direction of the vector q - p and retrieves music close to the moved coordinate z.
 
 ## Package
 * [ffmpeg](https://ffmpeg.org/)
