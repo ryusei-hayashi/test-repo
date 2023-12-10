@@ -25,7 +25,7 @@ The system computes the center p of the scene of input music.
 The system computes the center q of the scene of output music. 
 
 #### Output Music
-The system moves the coordinate z in the direction of the vector q - p and retrieves music close to the moved coordinate z.
+The system moves the coordinate z in the vector q - p direction and retrieves music close to the moved coordinate z.
 
 ## Package
 * [ffmpeg](https://ffmpeg.org/)
