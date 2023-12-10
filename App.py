@@ -43,7 +43,7 @@ def download(n):
             open('music.mp3', 'wb').write(requests.get(f'{n}/play.mp3').content)
         elif m == 'Uploader':
             open('music.mp3', 'wb').write(n.getbuffer())
-        st.audio(librosa.load('music.mp3', sr=sr), sample_rate=sr)
+        st.audio(librosa.load('music.mp3', sr=sr))
     except:
         st.error(f'Error: Unable to access {n}')
 
