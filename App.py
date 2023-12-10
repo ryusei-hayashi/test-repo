@@ -208,7 +208,7 @@ st.title('App')
 st.write('This application retrieves music that has both the worldview of the game and the atmosphere of the scene.')
 
 st.subheader('Input Music')
-m = st.selectbox('Input Method', ['YouTubeDL', 'Audiostock', 'Uploader'])
+m = st.selectbox('Input Method', ['YouTubeDL', 'Spotify API', 'Audiostock', 'Uploader'])
 if m == 'Uploader':
     n = st.file_uploader('Upload File')
 else:
