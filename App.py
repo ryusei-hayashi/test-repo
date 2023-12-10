@@ -29,7 +29,7 @@ def load_h5(i, o):
     m.load_weights(download(id=i, output=o, quiet=False))
     return m
 
-@st.cache_data
+@st.cache_data(max_entries=5)
 def load_np(i, o):
     return numpy.load(download(id=i, output=o, quiet=False), allow_pickle=True).item()
 
@@ -48,11 +48,11 @@ def get_mp3(n):
     except:
         st.error(f'Error: Unable to access the URL')
 
-@st.cache_data(max_entries=2)
+@st.cache_data(max_entries=3)
 def filter(s, v, a):
     return [k for k in Z if all(i in S[k] for i in s) and v[0] < V[k][0] < v[1] and a[0] < V[k][1] < a[1]]
 
-@st.cache_data(max_entries=2)
+@st.cache_data(max_entries=3)
 def center(K):
     return numpy.mean(numpy.array([Z[k] for k in K]), axis=0)
     
