@@ -22,7 +22,7 @@ seq = 256
 z_n = 32
 x_n = 1024
 
-@st.cache_resource
+@st.cache_resource(max_entries=2)
 def load_h5(i, o):
     m = VAE()
     m(tf.random.normal([1, x_n, seq, 1]))
@@ -33,7 +33,7 @@ def load_h5(i, o):
 def load_np(i, o):
     return numpy.load(download(id=i, output=o, quiet=False), allow_pickle=True).item()
 
-@st.cache_data
+@st.cache_data(max_entries=2)
 def get_mp3(n):
     try:
         if m == 'YouTubeDL':
@@ -48,11 +48,11 @@ def get_mp3(n):
     except:
         st.error(f'Error: Unable to access the URL')
 
-@st.cache_data
+@st.cache_data(max_entries=2)
 def filter(s, v, a):
     return [k for k in Z if all(i in S[k] for i in s) and v[0] < V[k][0] < v[1] and a[0] < V[k][1] < a[1]]
 
-@st.cache_data
+@st.cache_data(max_entries=2)
 def center(K):
     return numpy.mean(numpy.array([Z[k] for k in K]), axis=0)
     
