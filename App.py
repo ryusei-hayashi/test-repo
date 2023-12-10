@@ -8,11 +8,12 @@ import requests
 import spotipy
 import librosa
 import pandas
+import gdown
 import numpy
 
 st.set_page_config(page_title='Test App', page_icon=':musical_note:', layout='wide')
 
-yd = YoutubeDL({'outtmpl': 'data/music', 'playlist_items': '1', 'format': 'mp3/bestaudio/best', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'overwrites': True})
+yd = YoutubeDL({'outtmpl': 'tmp', 'playlist_items': '1', 'format': 'mp3/bestaudio/best', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'overwrites': True})
 sp = spotipy.Spotify(auth_manager=spotipy.oauth2.SpotifyClientCredentials(st.secrets['id'], st.secrets['pw']))
 sr = 22050
 fps = 25
@@ -22,14 +23,16 @@ z_n = 32
 x_n = 1024
 
 @st.cache_resource
-def load_h5(w):
+def load_h5(i, f):
+    gdown.download(f'https://drive.google.com/uc?id={i}', f, quiet=False)
     m = VAE()
     m(tf.random.normal([1, x_n, seq, 1]))
-    m.load_weights(w)
+    m.load_weights(f)
     return m
 
 @st.cache_data
-def load_np(f):
+def load_np(i, f):
+    gdown.download(f'https://drive.google.com/uc?id={i}', f, quiet=False)
     return numpy.load(f, allow_pickle=True).item()
 
 @st.cache_data
@@ -38,12 +41,12 @@ def download(n):
         if m == 'YouTubeDL':
             yd.download([n])
         elif m == 'Spotify API':
-            open('data/music.mp3', 'wb').write(requests.get(f'{sp.track(n.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
+            open('tmp.mp3', 'wb').write(requests.get(f'{sp.track(n.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
         elif m == 'Audiostock':
-            open('data/music.mp3', 'wb').write(requests.get(f'{n}/play.mp3').content)
+            open('tmp.mp3', 'wb').write(requests.get(f'{n}/play.mp3').content)
         elif m == 'Uploader':
-            open('data/music.mp3', 'wb').write(n.getbuffer())
-        st.audio('data/music.mp3')
+            open('tmp.mp3', 'wb').write(n.getbuffer())
+        st.audio('tmp.mp3')
     except:
         st.error(f'Error: Unable to access {n}')
 
@@ -246,6 +249,6 @@ st.subheader('Output Music')
 if st.button('Retrieve'):
     P = extract(sim + tim + wim + bim + pim + qim + aim, vim, zim)
     Q = extract(som + tom + wom + bom + pom + qom + aom, vom, zom)
-    z = M.get_z(collate(['data/music.mp3']))[0] + center(Q) - center(P)
+    z = M.get_z(collate(['tmp.mp3']))[0] + center(Q) - center(P)
     D = pandas.DataFrame([U[k] for k in sorted(Q, key=lambda k: numpy.linalg.norm(Z[k]-z))[:99]], columns=['URL', 'Name', 'Artist', 'Time'])
     st.dataframe(D, column_config={'URL': st.column_config.LinkColumn()})
