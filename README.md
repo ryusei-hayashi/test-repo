@@ -32,4 +32,4 @@ Input the scene of Output music. Valence and Arousal are based on [Circumplex mo
 * [numpy](https://numpy.org/)
 
 ## Licence
-* [MIT license](https://en.wikipedia.org/wiki/MIT_License)
+* [MIT License](https://en.wikipedia.org/wiki/MIT_License)
