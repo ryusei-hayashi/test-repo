@@ -43,7 +43,7 @@ def download(n):
             open('music.mp3', 'wb').write(requests.get(f'{n}/play.mp3').content)
         elif m == 'Uploader':
             open('music.mp3', 'wb').write(n.getbuffer())
-        st.markdown(f'<audio controls><source src="music.mp3" type="audio/mpeg"></audio>', unsafe_allow_html=True)
+        st.audio('music.mp3')
     except:
         st.error(f'Error: Unable to access {n}')
 
