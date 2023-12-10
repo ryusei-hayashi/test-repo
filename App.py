@@ -204,8 +204,8 @@ V = load_np('data/vad.npy')
 Z = load_np('data/vec.npy')
 U = load_np('data/url.npy')
 
-st.title('App')
-st.write('This application retrieves music that has both the worldview of the game and the atmosphere of the scene.')
+st.title('Test App')
+st.write('Test App retrieves music that has both the worldview of the game and the atmosphere of the scene.')
 
 st.subheader('Input Music')
 m = st.selectbox('Input Method', ['YouTubeDL', 'Spotify API', 'Audiostock', 'Uploader'])
@@ -217,6 +217,7 @@ if n:
     download(n)
 
 l, r = st.columns(2, gap='medium')
+
 with l:
     st.subheader('Scene of Input Music')
     sim = st.multiselect('State of input music', ['オープニング', 'タイトル', 'チュートリアル', 'ゲームオーバー', 'ゲームクリア', 'セレクト', 'ショップ', 'ミニイベント', 'セーフゾーン', 'ワールドマップ', 'ダンジョン', 'ステージ', 'エンディング'])
@@ -228,6 +229,7 @@ with l:
     aim = st.multiselect('Action of input music', ['移動', '走る', '泳ぐ', '飛ぶ', '運動', '競走', '遊ぶ', '休む', '考える', '閃く', '作業', '戦う', '潜入', '探索', '追う', '逃げる', '取引き', '宴', '勝利', '回想', '覚醒', '感動', '説得', '決意', '成長', '悩む', '出会い', '別れ', '登場', '不穏', '平穏', '解説', '熱狂', '困惑', '謀略', '犯罪', '暴力', 'ふざける', 'あおる', '恋愛', '感謝', '癒す', '励ます', '出掛ける'])
     vim = st.slider('Valence of input music', -1.0, 1.0, (-1.0, 1.0))
     zim = st.slider('Arousal of input music', -1.0, 1.0, (-1.0, 1.0))
+
 with r:
     st.subheader('Scene of Output Music')
     som = st.multiselect('State of output music', ['オープニング', 'タイトル', 'チュートリアル', 'ゲームオーバー', 'ゲームクリア', 'セレクト', 'ショップ', 'ミニイベント', 'セーフゾーン', 'ワールドマップ', 'ダンジョン', 'ステージ', 'エンディング'])
