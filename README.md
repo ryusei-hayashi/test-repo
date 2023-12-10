@@ -5,8 +5,16 @@ This repository is for Deploying [Test App](https://ryusei-test-repo.streamlit.a
 [Test App](https://ryusei-test-repo.streamlit.app) retrieves music that has both the worldview of the game and the atmosphere of the scene.
 
 ### Usage
+#### Input Music
+Input music to be used in the created game. Choose input method from YoutubeDL, Spotify API, Audiostock, Uploader. YoutubeDL has many [Supported sites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md).
 
-### Method
+#### Scene of Input Music
+Input the scene of input music. Valence and Arousal are based on [Circumplex model](https://en.wikipedia.org/wiki/Emotion_classification#Circumplex_model).
+
+#### Scene of Output Music
+Same as "Scene of Input Music"
+
+### System
 
 ## Package
 * [ffmpeg](https://ffmpeg.org/)
@@ -24,4 +32,4 @@ This repository is for Deploying [Test App](https://ryusei-test-repo.streamlit.a
 * [numpy](https://numpy.org/)
 
 ## Licence
-[MIT license](https://en.wikipedia.org/wiki/MIT_License)
+* [MIT license](https://en.wikipedia.org/wiki/MIT_License)
