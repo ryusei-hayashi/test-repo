@@ -1,6 +1,7 @@
 from statistics import fmean, mean
 from tensorflow import keras
 from yt_dlp import YoutubeDL
+from gdown import download
 import tensorflow_probability as tfp
 import tensorflow as tf
 import streamlit as st
@@ -8,7 +9,6 @@ import requests
 import spotipy
 import librosa
 import pandas
-import gdown
 import numpy
 
 st.set_page_config(page_title='Test App', page_icon=':musical_note:', layout='wide')
@@ -23,20 +23,18 @@ z_n = 32
 x_n = 1024
 
 @st.cache_resource
-def load_h5(i, f):
-    gdown.download(f'https://drive.google.com/uc?id={i}', f, quiet=False)
+def load_h5(i, o):
     m = VAE()
     m(tf.random.normal([1, x_n, seq, 1]))
-    m.load_weights(f)
+    m.load_weights(download(id=i, output=o, quiet=False))
     return m
 
 @st.cache_data
-def load_np(i, f):
-    gdown.download(f'https://drive.google.com/uc?id={i}', f, quiet=False)
-    return numpy.load(f, allow_pickle=True).item()
+def load_np(i, o):
+    return numpy.load(download(id=i, output=o, quiet=False), allow_pickle=True).item()
 
 @st.cache_data
-def download(n):
+def get_mp3(n):
     try:
         if m == 'YouTubeDL':
             yd.download([n])
@@ -51,7 +49,7 @@ def download(n):
         st.error(f'Error: Unable to access {n}')
 
 @st.cache_data
-def extract(s, v, a):
+def filter(s, v, a):
     return [k for k in Z if all(i in S[k] for i in s) and v[0] < V[k][0] < v[1] and a[0] < V[k][1] < a[1]]
 
 @st.cache_data
@@ -217,7 +215,7 @@ if m == 'Uploader':
 else:
     n = st.text_input('Input URL')
 if n:
-    download(n)
+    get_mp3(n)
 
 l, r = st.columns(2, gap='medium')
 
@@ -247,8 +245,8 @@ with r:
 
 st.subheader('Output Music')
 if st.button('Retrieve'):
-    P = extract(sim + tim + wim + bim + pim + qim + aim, vim, zim)
-    Q = extract(som + tom + wom + bom + pom + qom + aom, vom, zom)
+    P = filter(sim + tim + wim + bim + pim + qim + aim, vim, zim)
+    Q = filter(som + tom + wom + bom + pom + qom + aom, vom, zom)
     z = M.get_z(collate(['tmp.mp3']))[0] + center(Q) - center(P)
     D = pandas.DataFrame([U[k] for k in sorted(Q, key=lambda k: numpy.linalg.norm(Z[k]-z))[:99]], columns=['URL', 'Name', 'Artist', 'Time'])
     st.dataframe(D, column_config={'URL': st.column_config.LinkColumn()})
