@@ -1,5 +1,7 @@
 import streamlit as st
 
+st.set_page_config(page_title='Test App', page_icon=':musical_note:', layout='wide')
+
 st.title('System')
 
 st.header('Video on System of Test App')
