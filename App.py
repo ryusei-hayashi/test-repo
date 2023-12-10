@@ -25,7 +25,7 @@ x_n = 1024
 def load_h5(w):
     m = VAE()
     m(tf.random.normal([1, x_n, seq, 1]))
-    m.load_weights(w)
+    #m.load_weights(w)
     return m
 
 @st.cache_data
