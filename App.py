@@ -12,7 +12,7 @@ import numpy
 
 st.set_page_config(page_title='Test App', page_icon=':musical_note:', layout='wide')
 
-yd = YoutubeDL({'outtmpl': 'music', 'playlist_items': '1', 'format': 'mp3/bestaudio/best', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'overwrites': True})
+yd = YoutubeDL({'outtmpl': 'data/music', 'playlist_items': '1', 'format': 'mp3/bestaudio/best', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'overwrites': True})
 sp = spotipy.Spotify(auth_manager=spotipy.oauth2.SpotifyClientCredentials(st.secrets['id'], st.secrets['pw']))
 sr = 22050
 fps = 25
@@ -38,12 +38,12 @@ def download(n):
         if m == 'YouTubeDL':
             yd.download([n])
         elif m == 'Spotify API':
-            open('music.mp3', 'wb').write(requests.get(f'{sp.track(n.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
+            open('data/music.mp3', 'wb').write(requests.get(f'{sp.track(n.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
         elif m == 'Audiostock':
-            open('music.mp3', 'wb').write(requests.get(f'{n}/play.mp3').content)
+            open('data/music.mp3', 'wb').write(requests.get(f'{n}/play.mp3').content)
         elif m == 'Uploader':
-            open('music.mp3', 'wb').write(n.getbuffer())
-        st.audio('music.mp3')
+            open('data/music.mp3', 'wb').write(n.getbuffer())
+        st.audio('data/music.mp3')
     except:
         st.error(f'Error: Unable to access {n}')
 
@@ -246,6 +246,6 @@ st.subheader('Output Music')
 if st.button('Retrieve'):
     P = extract(sim + tim + wim + bim + pim + qim + aim, vim, zim)
     Q = extract(som + tom + wom + bom + pom + qom + aom, vom, zom)
-    z = M.get_z(collate(['music.mp3']))[0] + center(Q) - center(P)
+    z = M.get_z(collate(['data/music.mp3']))[0] + center(Q) - center(P)
     D = pandas.DataFrame([U[k] for k in sorted(Q, key=lambda k: numpy.linalg.norm(Z[k]-z))[:99]], columns=['URL', 'Name', 'Artist', 'Time'])
     st.dataframe(D, column_config={'URL': st.column_config.LinkColumn()})
