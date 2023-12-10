@@ -201,11 +201,11 @@ class VAE(keras.Model):
     def get_z(self, x):
         return tf.convert_to_tensor(self.sample(self.encoder(x, training=False))).numpy()
     
-M = load_h5('data/vae.h5')
-S = load_np('data/scn.npy')
-V = load_np('data/vad.npy')
-Z = load_np('data/vec.npy')
-U = load_np('data/url.npy')
+M = load_h5('1fAaYwGOlxQ7oIl7tQgkTC1lAenelESDy', 'vae.h5')
+S = load_np('12Rjd8eSTxq5d2_P2OMulRWxt8jwz0H9R', 'scn.npy')
+V = load_np('1uk-5RoYT1T5WZU2heh_yadM6b8Qku1rO', 'vad.npy')
+Z = load_np('1CcuvRC1I8AnxTU_TBE8I9zxgVIM6OFYQ', 'vec.npy')
+U = load_np('1GrN1M3-ejwQM-WxryIClLpPvsmsKUp7w', 'url.npy')
 
 st.title('Test App')
 st.write('Test App retrieves music that has both the worldview of the game and the atmosphere of the scene.')
