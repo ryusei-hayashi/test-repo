@@ -29,11 +29,11 @@ def load_h5(i, o):
     m.load_weights(download(id=i, output=o, quiet=False))
     return m
 
-@st.cache_data(ttl='10m')
+@st.cache_data(max_entries=4)
 def load_np(i, o):
     return numpy.load(download(id=i, output=o, quiet=False), allow_pickle=True).item()
 
-@st.cache_data(max_entries=1)
+@st.cache_data(ttl='10m')
 def get_mp3(n):
     try:
         if m == 'YouTubeDL':
