@@ -1,14 +1,13 @@
 import streamlit as st
-#import base64
 
 st.set_page_config(page_title='Test App', page_icon=':musical_note:', layout='wide')
 
 st.title('Usage')
 
-st.header('Video on Usage of This App')
+st.header('Video on Usage of Test App')
 st.write('Coming soon')#st.video()
 
-st.header('Text on Usage of This App')
+st.header('Text on Usage of Test App')
 
 st.subheader('Input Music')
 st.write('Input music to be used in the created game. Choose input method from YoutubeDL, Spotify API, Audiostock, Uploader. YoutubeDL supports https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md.')
