@@ -13,7 +13,7 @@ import numpy
 st.set_page_config(page_title='Test App', page_icon=':musical_note:', layout='wide')
 
 yd = YoutubeDL({'outtmpl': 'music', 'playlist_items': '1', 'format': 'mp3/bestaudio/best', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'overwrites': True})
-sp = spotipy.Spotify(spotipy.oauth2.SpotifyClientCredentials(st.secrets['id'], st.secrets['pw']))
+sp = spotipy.Spotify(auth_manager=spotipy.oauth2.SpotifyClientCredentials(st.secrets['id'], st.secrets['pw']))
 sr = 22050
 fps = 25
 sec = 10
