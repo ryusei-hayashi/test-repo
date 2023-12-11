@@ -47,7 +47,7 @@ def get_mp3(s):
             open('tmp.mp3', 'wb').write(requests.get(f'{s}/play.mp3').content)
         elif w == 'Uploader':
             open('tmp.mp3', 'wb').write(s.getbuffer())
-        st.audio('tmp.mp3')
+        player('tmp.mp3')
     except:
         st.error(f'Error: Unable to access the URL')
 
@@ -58,6 +58,10 @@ def filter(s, v, a):
 @st.cache_data(max_entries=2)
 def center(K):
     return numpy.mean(numpy.array([Z[k] for k in K]), axis=0)
+
+def player(f):
+    src = f'data:audio/mp3;base64,{base64.b64encode(open(f, "rb").read()).decode()}'
+    st.markdown(f'<audio src={src} controlslist="nodownload" controls></audio>', True)
     
 def trim(y):
     b = librosa.beat.beat_track(y=y, sr=sr, hop_length=sr//fps)[1]
