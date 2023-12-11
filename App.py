@@ -61,7 +61,7 @@ def center(K):
 
 def player(f):
     src = f'data:audio/mp3;base64,{base64.b64encode(open(f, "rb").read()).decode()}'
-    st.markdown(f'<audio src="{src}" controlslist="nodownload" controls></audio>', True)
+    st.markdown(f'<audio src="{src}" type="audio/mp3" controlslist="nodownload" controls></audio>', True)
     
 def trim(y):
     b = librosa.beat.beat_track(y=y, sr=sr, hop_length=sr//fps)[1]
