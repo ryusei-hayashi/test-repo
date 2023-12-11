@@ -40,7 +40,7 @@ def load_np(i, o):
 def get_mp3(s):
     try:
         if w == 'YoutubeDL':
-            yd.download([n])
+            yd.download([s])
         elif w == 'Spotify API':
             open('tmp.mp3', 'wb').write(requests.get(f'{sp.track(s.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
         elif w == 'Audiostock':
