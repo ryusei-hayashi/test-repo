@@ -5,6 +5,7 @@ requests
 spotipy
 librosa
 yt-dlp
+base64
 pandas
 gdown
 numpy
