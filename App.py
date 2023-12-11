@@ -60,8 +60,8 @@ def center(K):
     return numpy.mean(numpy.array([Z[k] for k in K]), axis=0)
 
 def player(f):
-    src = f"data:audio/mp3;base64,{base64.b64encode(open(f, 'rb').read()).decode()}"
-    st.markdown(f'<audio src={src} controlslist="nodownload" controls></audio>', True)
+    src = f'data:audio/mp3;base64,{base64.b64encode(open(f, "rb").read()).decode()}'
+    st.markdown(f'<audio src="{src}" controlslist="nodownload" controls></audio>', True)
     
 def trim(y):
     b = librosa.beat.beat_track(y=y, sr=sr, hop_length=sr//fps)[1]
