@@ -13,7 +13,7 @@ def profile(n, a, p, e):
 st.title('Profile')
 
 st.header('Developer')
-profile('Ryusei Hayashi', 'Nihon University, Graduate School of Integrated Basic Sciences, Major of Earth Information Mathematical Sciences, Kitahara Lab', 'ryusei[at]kthrlab.jp')
+profile('Ryusei Hayashi', 'Nihon University, Graduate School of Integrated Basic Sciences, Major of Earth Information Mathematical Sciences, Kitahara Lab', 'Student', 'ryusei[at]kthrlab.jp')
 
 st.header('Supporter')
 profile('Tetsuro Kitahara', 'Nihon University, College of Humanities and Sciences, Department of Information Science, Kitahara Lab', 'Professor', '')
