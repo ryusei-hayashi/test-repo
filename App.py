@@ -40,18 +40,18 @@ def load_np(i, o):
 
 @st.cache_data(ttl='10m')
 def get_mp3(s):
-    try:
-        if w == 'Spotify API':
-            open(f'{st.secrets["pt"]}.mp3', 'wb').write(requests.get(f'{sp.track(s.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
-        elif w == 'Audiostock':
-            open(f'{st.secrets["pt"]}.mp3', 'wb').write(requests.get(f'{s}/play.mp3').content)
-        elif w == 'YouttubeDL':
-            yd.download([s])
-        elif w == 'Uploader':
-            open(f'{st.secrets["pt"]}.mp3', 'wb').write(s.getbuffer())
-        player(f'{st.secrets["pt"]}.mp3')
-    except:
-        st.error(f'Error: Unable to access the URL')
+    #try:
+    if w == 'Spotify API':
+        open(f'{st.secrets["pt"]}.mp3', 'wb').write(requests.get(f'{sp.track(s.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
+    elif w == 'Audiostock':
+        open(f'{st.secrets["pt"]}.mp3', 'wb').write(requests.get(f'{s}/play.mp3').content)
+    elif w == 'YouttubeDL':
+        yd.download([s])
+    elif w == 'Uploader':
+        open(f'{st.secrets["pt"]}.mp3', 'wb').write(s.getbuffer())
+    player(f'{st.secrets["pt"]}.mp3')
+    #except:
+     #   st.error(f'Error: Unable to access the URL')
 
 @st.cache_data(max_entries=2)
 def filter(s, v, a):
