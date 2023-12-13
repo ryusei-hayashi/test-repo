@@ -9,7 +9,10 @@ if st.sidebar.button('Clear Cache', use_container_width=True):
 st.title('Library')
 
 st.header('Paper')
+st.write('Coming soon')
 
 st.header('Slide')
+st.write('Coming soon')
 
 st.header('Panel')
+st.write('Coming soon')
