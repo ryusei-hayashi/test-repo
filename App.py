@@ -41,12 +41,12 @@ def load_np(i, o):
 @st.cache_data(ttl='10m')
 def get_mp3(s):
     try:
-        if w == 'YoutubeDL':
-            yd.download([s])
-        elif w == 'Spotify API':
+        if w == 'Spotify API':
             open('tmp.mp3', 'wb').write(requests.get(f'{sp.track(s.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
         elif w == 'Audiostock':
             open('tmp.mp3', 'wb').write(requests.get(f'{s}/play.mp3').content)
+        elif w == 'YouttubeDL':
+            yd.download([s])
         elif w == 'Uploader':
             open('tmp.mp3', 'wb').write(s.getbuffer())
         player('tmp.mp3')
@@ -218,7 +218,7 @@ st.title('Test App')
 st.write('Test App retrieves music that has both the worldview of the game and the atmosphere of the scene.')
 
 st.subheader('Input Music')
-w = st.selectbox('Input Way', ['YoutubeDL', 'Spotify API', 'Audiostock', 'Uploader'])
+w = st.selectbox('Input Way', ['Spotify API', 'Audiostock', 'YoutubeDL', 'Uploader'])
 if w == 'Uploader':
     s = st.file_uploader('Upload File')
 else:
