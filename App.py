@@ -254,11 +254,11 @@ with r:
 
 st.subheader('Output Music')
 if st.button('Retrieve', type='primary'):
-    try:
-        P = filter(sim + tim + wim + bim + pim + qim + aim, vim, zim)
-        Q = filter(som + tom + wom + bom + pom + qom + aom, vom, zom)
+    P = filter(sim + tim + wim + bim + pim + qim + aim, vim, zim)
+    Q = filter(som + tom + wom + bom + pom + qom + aom, vom, zom)
+    if P and Q:
         z = M.get_z(collate([f'{st.secrets["pt"]}.mp3']))[0] + center(Q) - center(P)
         D = pandas.DataFrame([U[k] for k in sorted(Q, key=lambda k: numpy.linalg.norm(Z[k]-z))[:99]], columns=['URL', 'Name', 'Artist', 'Time'])
         st.dataframe(D, column_config={'URL': st.column_config.LinkColumn()})
-    except:
+    else:
         st.error(f'Error: No music to fit the condition')
