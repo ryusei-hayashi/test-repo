@@ -18,7 +18,7 @@ st.sidebar.link_button('Contact Us', 'https://forms.gle/A4vWuEAp4pPEY4sf9', use_
 if st.sidebar.button('Clear Cache', use_container_width=True):
    st.cache_data.clear()
 
-yd = YoutubeDL({'outtmpl': 'tmp', 'playlist_items': '1', 'format': 'mp3/bestaudio/best', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'overwrites': True})
+yd = YoutubeDL({'outtmpl': st.secrets['pt'], 'playlist_items': '1', 'format': 'mp3/bestaudio/best', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'overwrites': True})
 sp = spotipy.Spotify(auth_manager=spotipy.oauth2.SpotifyClientCredentials(st.secrets['id'], st.secrets['pw']))
 sr = 22050
 fps = 25
@@ -42,14 +42,14 @@ def load_np(i, o):
 def get_mp3(s):
     try:
         if w == 'Spotify API':
-            open('tmp.mp3', 'wb').write(requests.get(f'{sp.track(s.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
+            open(f'{st.secrets["pt"]}.mp3', 'wb').write(requests.get(f'{sp.track(s.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
         elif w == 'Audiostock':
-            open('tmp.mp3', 'wb').write(requests.get(f'{s}/play.mp3').content)
+            open(f'{st.secrets["pt"]}.mp3', 'wb').write(requests.get(f'{s}/play.mp3').content)
         elif w == 'YouttubeDL':
             yd.download([s])
         elif w == 'Uploader':
-            open('tmp.mp3', 'wb').write(s.getbuffer())
-        player('tmp.mp3')
+            open(f'{st.secrets["pt"]}.mp3', 'wb').write(s.getbuffer())
+        player(f'{st.secrets["pt"]}.mp3')
     except:
         st.error(f'Error: Unable to access the URL')
 
@@ -257,7 +257,7 @@ if st.button('Retrieve', type='primary'):
     try:
         P = filter(sim + tim + wim + bim + pim + qim + aim, vim, zim)
         Q = filter(som + tom + wom + bom + pom + qom + aom, vom, zom)
-        z = M.get_z(collate(['tmp.mp3']))[0] + center(Q) - center(P)
+        z = M.get_z(collate([f'{st.secrets["pt"]}.mp3']))[0] + center(Q) - center(P)
         D = pandas.DataFrame([U[k] for k in sorted(Q, key=lambda k: numpy.linalg.norm(Z[k]-z))[:99]], columns=['URL', 'Name', 'Artist', 'Time'])
         st.dataframe(D, column_config={'URL': st.column_config.LinkColumn()})
     except:
