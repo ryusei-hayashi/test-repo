@@ -8,10 +8,10 @@ if st.sidebar.button('Clear Cache', use_container_width=True):
 
 st.title('System')
 
-st.header('Video on System of Test App')
+st.header('Video')
 st.write('Coming soon') #st.video()
 
-st.header('Text on System of Test App')
+st.header('Text')
 
 st.subheader('Input Music')
 st.write('The system converts the input music to the coordinate z in AI.')
