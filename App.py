@@ -253,7 +253,7 @@ with r:
     zom = st.slider('Arousal of output music', -1.0, 1.0, (-1.0, 1.0))
 
 st.subheader('Output Music')
-if st.button('Retrieve'):
+if st.button('Retrieve', type='primary'):
     try:
         P = filter(sim + tim + wim + bim + pim + qim + aim, vim, zim)
         Q = filter(som + tom + wom + bom + pom + qom + aom, vom, zom)
