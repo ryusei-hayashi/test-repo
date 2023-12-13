@@ -14,7 +14,8 @@ import numpy
 
 st.set_page_config(page_title='Test App', page_icon=':musical_note:', layout='wide')
 
-if st.sidebar.button('Clear Cache'):
+st.sidebar.link_button('Contact Us', 'https://forms.gle/A4vWuEAp4pPEY4sf9', use_container_width=True)
+if st.sidebar.button('Clear Cache', use_container_width=True):
    st.cache_data.clear()
 
 yd = YoutubeDL({'outtmpl': 'tmp', 'playlist_items': '1', 'format': 'mp3/bestaudio/best', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'overwrites': True})
