@@ -14,7 +14,7 @@ st.write('Coming soon')#st.video()
 st.header('Text on Usage of Test App')
 
 st.subheader('Input Music')
-st.write('Input music to be used in the created game. Choose input method from YoutubeDL, Spotify API, Audiostock, Uploader. YoutubeDL supports https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md.')
+st.write('Input music to be used in the created game. Choose input method from Spotify API, Audiostock, YoutubeDL, Uploader. YoutubeDL supports https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md.')
 
 l, r = st.columns(2, gap='medium')
 
