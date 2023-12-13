@@ -6,7 +6,7 @@ This repository is for Deploying [Test App](https://ryusei-test-repo.streamlit.a
 
 ### Usage
 #### Input Music
-Input music to be used in the created game. Choose input method from YoutubeDL, Spotify API, Audiostock, Uploader. YoutubeDL has many [Supported sites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md).
+Input music to be used in the created game. Choose input method from Spotify API, Audiostock, YoutubeDL, Uploader. YoutubeDL has many [Supported sites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md).
 
 #### Scene of Input Music
 Input the scene of input music. Valence and Arousal are based on [Circumplex model](https://en.wikipedia.org/wiki/Emotion_classification#Circumplex_model).
@@ -25,7 +25,7 @@ The system computes the center p of the scene of input music.
 The system computes the center q of the scene of output music. 
 
 #### Output Music
-The system moves the coordinate z in the vector q - p direction and retrieves music close to the moved coordinate z.
+The system moves the coordinate z in the vector q - p direction and retrieves music near the moved coordinate z.
 
 ## Package
 * [ffmpeg](https://ffmpeg.org/)
