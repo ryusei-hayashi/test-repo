@@ -8,10 +8,10 @@ if st.sidebar.button('Clear Cache', use_container_width=True):
 
 st.title('Usage')
 
-st.header('Video on Usage of Test App')
-st.write('Coming soon')#st.video()
+st.header('Video')
+st.write('Coming soon') #st.video()
 
-st.header('Text on Usage of Test App')
+st.header('Text')
 
 st.subheader('Input Music')
 st.write('Input music to be used in the created game. Choose input method from Spotify API, Audiostock, YoutubeDL, Uploader. YoutubeDL supports https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md.')
