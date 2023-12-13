@@ -18,7 +18,7 @@ st.sidebar.link_button('Contact Us', 'https://forms.gle/A4vWuEAp4pPEY4sf9', use_
 if st.sidebar.button('Clear Cache', use_container_width=True):
    st.cache_data.clear()
 
-yd = YoutubeDL({'outtmpl': f'{st.secrets["pt"]}', 'playlist_items': '1', 'format': 'mp3/bestaudio/best', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'overwrites': True})
+yd = YoutubeDL({'outtmpl': st.secrets['pt'], 'playlist_items': '1', 'format': 'mp3/bestaudio/best', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'overwrites': True})
 sp = spotipy.Spotify(auth_manager=spotipy.oauth2.SpotifyClientCredentials(st.secrets['id'], st.secrets['pw']))
 sr = 22050
 fps = 25
@@ -40,18 +40,18 @@ def load_np(i, o):
 
 @st.cache_data(ttl='10m')
 def get_mp3(s):
-    #try:
-    if w == 'Spotify API':
-        open(f'{st.secrets["pt"]}.mp3', 'wb').write(requests.get(f'{sp.track(s.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
-    elif w == 'Audiostock':
-        open(f'{st.secrets["pt"]}.mp3', 'wb').write(requests.get(f'{s}/play.mp3').content)
-    elif w == 'YoutubeDL':
-        yd.download([s])
-    elif w == 'Uploader':
-        open(f'{st.secrets["pt"]}.mp3', 'wb').write(s.getbuffer())
-    player(f'{st.secrets["pt"]}.mp3')
-    #except:
-     #   st.error(f'Error: Unable to access the URL')
+    try:
+        if w == 'Spotify API':
+            open(f'{st.secrets["pt"]}.mp3', 'wb').write(requests.get(f'{sp.track(s.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
+        elif w == 'Audiostock':
+            open(f'{st.secrets["pt"]}.mp3', 'wb').write(requests.get(f'{s}/play.mp3').content)
+        elif w == 'YoutubeDL':
+            yd.download([s])
+        elif w == 'Uploader':
+            open(f'{st.secrets["pt"]}.mp3', 'wb').write(s.getbuffer())
+        player(f'{st.secrets["pt"]}.mp3')
+    except:
+        st.error(f'Error: Unable to access the URL')
 
 @st.cache_data(max_entries=2)
 def filter(s, v, a):
