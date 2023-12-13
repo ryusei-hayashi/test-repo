@@ -45,7 +45,7 @@ def get_mp3(s):
         open(f'{st.secrets["pt"]}.mp3', 'wb').write(requests.get(f'{sp.track(s.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
     elif w == 'Audiostock':
         open(f'{st.secrets["pt"]}.mp3', 'wb').write(requests.get(f'{s}/play.mp3').content)
-    elif w == 'YouttubeDL':
+    elif w == 'YoutubeDL':
         yd.download([s])
     elif w == 'Uploader':
         open(f'{st.secrets["pt"]}.mp3', 'wb').write(s.getbuffer())
