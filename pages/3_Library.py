@@ -9,10 +9,10 @@ if st.sidebar.button('Clear Cache', use_container_width=True):
 st.title('Library')
 
 st.header('Paper')
-st.write('Coming soon')
+st.write('https://drive.google.com/file/d/18H8dnbhL-D53BUWb09nGVWGWyot06OM6')
 
 st.header('Slide')
-st.write('Coming soon')
+st.write('https://drive.google.com/file/d/1MIN0am-lZV7TqGx20CjgG1CSQXyLkgOO')
 
 st.header('Panel')
-st.write('Coming soon')
+st.write('https://drive.google.com/file/d/1BY0bn5FWc_d2yoEi4ssPpgdomMCw9fLQ')
