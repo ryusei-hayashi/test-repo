@@ -9,12 +9,12 @@ if st.sidebar.button('Clear Cache', use_container_width=True):
 st.title('System')
 
 st.header('Video')
-st.write('Coming soon') #st.video()
+st.write('https://drive.google.com/file/d/1CElf11tsDnjplpgmkTtW5yUhcXQi-yU5') #st.video()
 
 st.header('Text')
 
 st.subheader('Input Music')
-st.write('The system converts the input music to the coordinate z in AI.')
+st.write('The system converts the input music to the coordinate z in VAE.')
 
 l, r = st.columns(2, gap='medium')
 
