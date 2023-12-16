@@ -9,12 +9,12 @@ if st.sidebar.button('Clear Cache', use_container_width=True):
 st.title('Usage')
 
 st.header('Video')
-st.write('Coming soon') #st.video()
+st.write('https://drive.google.com/file/d/1ICV-xUKHAVmSvUUTvPABV1KQIFMyXXij') #st.video()
 
 st.header('Text')
 
 st.subheader('Input Music')
-st.write('Input music to be used in the created game. Choose input method from Spotify API, Audiostock, YoutubeDL, Uploader. YoutubeDL supports https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md.')
+st.write('Input music to be used in the created game. Choose input way from Spotify API, Audiostock, YoutubeDL, Uploader. YoutubeDL supports https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md.')
 
 l, r = st.columns(2, gap='medium')
 
