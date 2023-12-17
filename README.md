@@ -16,7 +16,7 @@ Input the scene of output music. Valence and Arousal are based on [Circumplex mo
 
 ### System
 #### Input Music
-The system converts the input music to the coordinate z in AI.
+The system converts the input music to the coordinate z in VAE.
 
 #### Scene of Input Music
 The system computes the center p of the scene of input music.
@@ -28,7 +28,7 @@ The system computes the center q of the scene of output music.
 The system moves the coordinate z in the vector q - p direction and retrieves music near the moved coordinate z.
 
 ## Package
-* [ffmpeg](https://ffmpeg.org/)
+* [ffmpeg](https://ffmpeg.org)
 
 ## Requirement
 * [tensorflow-probability](https://www.tensorflow.org/probability)
@@ -36,11 +36,11 @@ The system moves the coordinate z in the vector q - p direction and retrieves mu
 * [statistics](https://docs.python.org/3/library/statistics.html)
 * [streamlit](https://streamlit.io)
 * [requests](https://requests.readthedocs.io)
-* [spotipy](https://spotipy.readthedocs.io/)
-* [librosa](https://librosa.org/)
+* [spotipy](https://spotipy.readthedocs.io)
+* [librosa](https://librosa.org)
 * [yt-dlp](https://github.com/yt-dlp/yt-dlp)
-* [pandas](https://pandas.pydata.org/)
-* [numpy](https://numpy.org/)
+* [pandas](https://pandas.pydata.org)
+* [numpy](https://numpy.org)
 
 ## Licence
 * [MIT License](https://en.wikipedia.org/wiki/MIT_License)
