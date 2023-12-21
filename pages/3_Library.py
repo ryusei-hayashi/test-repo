@@ -12,9 +12,9 @@ if st.sidebar.button('Clear Cache', use_container_width=True):
     st.cache_data.clear()
 
 def pdf(f, w, h):
-    with open(f, "rb") as x:
-        d = f'data:application/pdf;base64,{base64.b64encode(x.read()).decode("utf-8")}'
-        st.markdown(f'<object data="{d}" width="{w}" height="{h}" type="application/pdf"></object>', True)
+    #with open(f, "rb") as x:
+     #   d = f'data:application/pdf;base64,{base64.b64encode(x.read()).decode("utf-8")}'
+    st.markdown(f'<iframe src="{f}" width="{w}" height="{h}" type="application/pdf"></iframe>', True)
 
 st.title('Library')
 
