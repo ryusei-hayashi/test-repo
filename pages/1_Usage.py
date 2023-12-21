@@ -8,7 +8,7 @@ if st.sidebar.button('Clear Cache', use_container_width=True):
 st.title('Usage')
 
 st.header('Video')
-st.write('https://drive.google.com/file/d/1ICV-xUKHAVmSvUUTvPABV1KQIFMyXXij') #st.video()
+st.write('comming soon') #st.video()
 
 st.header('Text')
 
