@@ -30,12 +30,6 @@ seq = 256
 z_n = 32
 x_n = 1024
 
-Z = load_np('source/vec.npy')
-S = load_np('source/scn.npy')
-V = load_np('source/vad.npy')
-U = load_np('source/url.npy')
-M = load_h5('source/vae.h5')
-
 def trim(y):
     b = librosa.beat.beat_track(y=y, sr=sr, hop_length=sr//fps)[1]
     if len(b) < 9:
@@ -212,6 +206,12 @@ class VAE(keras.Model):
 
     def get_z(self, x):
         return tf.convert_to_tensor(self.sample(self.encoder(x, training=False))).numpy()
+
+Z = load_np('source/vec.npy')
+S = load_np('source/scn.npy')
+V = load_np('source/vad.npy')
+U = load_np('source/url.npy')
+M = load_h5('source/vae.h5')
     
 st.title('EgGMAn')
 st.write('EgGMAn (Engine of Game Music Analysis) retrieves music that has both the worldview of the game and the atmosphere of the scene.')
