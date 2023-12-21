@@ -9,12 +9,12 @@ if not os.path.exists('docs'):
 st.set_page_config('EgGMAn', ':egg:', 'wide')
 st.sidebar.link_button('Contact Us', 'https://forms.gle/A4vWuEAp4pPEY4sf9', use_container_width=True)
 if st.sidebar.button('Clear Cache', use_container_width=True):
-   st.cache_data.clear()
+    st.cache_data.clear()
 
 def pdf(f, w, h):
-    st.markdown(f'<embed src="https://drive.google.com/viewerng/viewer?embedded=true&url={f}" width="{w}" height="{h}">', unsafe_allow_html=True)
-    #s = f'data:application/pdf;base64,{base64.b64encode(open(f, "rb").read()).decode("utf-8")}'
-    #st.markdown(f'<embed src="{s}" width="{w}" height="{h}" type="application/pdf">', True)
+    with open(f, "rb") as x:
+        s = f'data:application/pdf;base64,{base64.b64encode(x.read()).decode("utf-8")}'
+        st.markdown(f'<embed src="{s}" width="{w}" height="{h}" type="application/pdf">', True)
 
 st.title('Library')
 
