@@ -4,6 +4,8 @@ def pdf(i, w, h):
     s = f'https://drive.google.com/file/d/{i}/preview'
     st.markdown(f'<iframe src="{s}" width="{w}" height="{h}"></iframe>', True)
 
+st.title('Library')
+
 st.header('Paper')
 pdf('18H8dnbhL-D53BUWb09nGVWGWyot06OM6', 600, 900)
 
