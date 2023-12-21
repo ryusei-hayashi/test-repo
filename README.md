@@ -1,8 +1,8 @@
 # Test Repo
-This repository is for Deploying [Test App](https://ryusei-test-repo.streamlit.app).
+This repository is for Deploying [EgGMAn](https://ryusei-test-repo.streamlit.app).
 
-## Test App
-[Test App](https://ryusei-test-repo.streamlit.app) retrieves music that has both the worldview of the game and the atmosphere of the scene.
+## EgGMAn
+[EgGMAn](https://ryusei-test-repo.streamlit.app) retrieves music that has both the worldview of the game and the atmosphere of the scene.
 
 ### Usage
 #### Input Music
@@ -40,7 +40,9 @@ The system moves the coordinate z in the vector q - p direction and retrieves mu
 * [librosa](https://librosa.org)
 * [yt-dlp](https://github.com/yt-dlp/yt-dlp)
 * [pandas](https://pandas.pydata.org)
+* [gdown](https://github.com/wkentaro/gdown)
 * [numpy](https://numpy.org)
+* [os](https://docs.python.org/3/library/os.html)
 
 ## Licence
 * [MIT License](https://en.wikipedia.org/wiki/MIT_License)
