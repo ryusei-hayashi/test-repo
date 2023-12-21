@@ -13,7 +13,7 @@ st.write('comming soon') #st.video()
 st.header('Text')
 
 st.subheader('Input Music')
-st.markdown('Input music to be used in the created game. Choose input way from Spotify API, Audiostock, YoutubeDL, Uploader. YoutubeDL has many [Supported sites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)')
+st.markdown('Input music to be used in the created game. Choose input way from Spotify API, Audiostock, YoutubeDL, Uploader. YoutubeDL has many [Supported sites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md).')
 
 l, r = st.columns(2, gap='medium')
 
