@@ -21,76 +21,6 @@ st.sidebar.link_button('Contact Us', 'https://forms.gle/A4vWuEAp4pPEY4sf9', use_
 if st.sidebar.button('Clear Cache', use_container_width=True):
     st.cache_data.clear()
 
-yd = YoutubeDL({'outtmpl': 'tmp', 'playlist_items': '1', 'format': 'mp3/bestaudio/best', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}]})
-sp = spotipy.Spotify(auth_manager=spotipy.oauth2.SpotifyClientCredentials(st.secrets['id'], st.secrets['pw']))
-sr = 22050
-fps = 25
-sec = 10
-seq = 256
-z_n = 32
-x_n = 1024
-
-def trim(y):
-    b = librosa.beat.beat_track(y=y, sr=sr, hop_length=sr//fps)[1]
-    if len(b) < 9:
-        return y[:sr*sec]
-    s = mean(b[:2])
-    i = numpy.searchsorted(b, s + sec * fps) - 1
-    return y[sr*s//fps:sr*mean(b[i:i+2])//fps]
-
-def stft(y):
-    return librosa.magphase(librosa.stft(y=y, hop_length=sr//fps, n_fft=2*x_n-1))[0]
-
-def cqt(y):
-    return librosa.magphase(librosa.cqt(y=y, hop_length=sr//fps, n_bins=x_n, bins_per_octave=x_n//7))[0]
-
-def mel(y):
-    return librosa.feature.melspectrogram(y=y, hop_length=sr//fps, n_mels=x_n)
-
-def pad(y):
-    return numpy.pad(y, ((0, x_n-y.shape[0]), (0, seq-y.shape[1])), constant_values=-1e-300)
-
-@st.cache_data(max_entries=4)
-def load_np(f):
-    return numpy.load(f, allow_pickle=True).item()
-
-@st.cache_data(max_entries=1)
-def load_h5(f):
-    m = VAE()
-    m(tf.random.normal([1, x_n, seq, 1]))
-    m.load_weights(f)
-    return m
-
-@st.cache_data(max_entries=1)
-def download(s):
-    try:
-        if w == 'Spotify API':
-            open('tmp.mp3', 'wb').write(requests.get(f'{sp.track(s.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
-        elif w == 'Audiostock':
-            open('tmp.mp3', 'wb').write(requests.get(f'{s}/play.mp3').content)
-        elif w == 'YoutubeDL':
-            yd.download([s])
-        elif w == 'Uploader':
-            open('tmp.mp3', 'wb').write(s.getbuffer())
-        src = f'data:audio/mp3;base64,{base64.b64encode(open("tmp.mp3", "rb").read()).decode()}'
-        st.markdown(f'<audio src="{src}" controlslist="nodownload" controls></audio>', True)
-        return librosa.load('tmp.mp3', sr=sr, offset=10, duration=2*sec)[0]
-    except:
-        st.error(f'Error: Unable to access {s}')
-        return numpy.zeros(1)
-
-@st.cache_data(max_entries=2)
-def filter(s, v, a):
-    return [k for k in Z if all(i in S[k] for i in s) and v[0] < V[k][0] < v[1] and a[0] < V[k][1] < a[1]]
-
-@st.cache_data(max_entries=2)
-def center(K):
-    return numpy.mean(numpy.array([Z[k] for k in K]), axis=0)
-
-@st.cache_data(max_entries=1)
-def collate(Y):
-    return numpy.array([pad(stft(trim(y))[:x_n,:seq]) for y in Y])[:,:,:,numpy.newaxis]
-
 class Conv1(keras.Model):
     def __init__(self, channel, kernel, stride, padding):
         super(Conv1, self).__init__()
@@ -207,11 +137,81 @@ class VAE(keras.Model):
     def get_z(self, x):
         return tf.convert_to_tensor(self.sample(self.encoder(x, training=False))).numpy()
 
+def trim(y):
+    b = librosa.beat.beat_track(y=y, sr=sr, hop_length=sr//fps)[1]
+    if len(b) < 9:
+        return y[:sr*sec]
+    s = mean(b[:2])
+    i = numpy.searchsorted(b, s + sec * fps) - 1
+    return y[sr*s//fps:sr*mean(b[i:i+2])//fps]
+
+def stft(y):
+    return librosa.magphase(librosa.stft(y=y, hop_length=sr//fps, n_fft=2*x_n-1))[0]
+
+def cqt(y):
+    return librosa.magphase(librosa.cqt(y=y, hop_length=sr//fps, n_bins=x_n, bins_per_octave=x_n//7))[0]
+
+def mel(y):
+    return librosa.feature.melspectrogram(y=y, hop_length=sr//fps, n_mels=x_n)
+
+def pad(y):
+    return numpy.pad(y, ((0, x_n-y.shape[0]), (0, seq-y.shape[1])), constant_values=-1e-300)
+
+@st.@st.cache_resource(max_entries=1)
+def load_h5(f):
+    m = VAE()
+    m(tf.random.normal([1, x_n, seq, 1]))
+    m.load_weights(f)
+    return m
+
+@st.cache_data(max_entries=4)
+def load_np(f):
+    return numpy.load(f, allow_pickle=True).item()
+
+@st.cache_data(max_entries=1)
+def download(s):
+    try:
+        if w == 'Spotify API':
+            open('tmp.mp3', 'wb').write(requests.get(f'{sp.track(s.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
+        elif w == 'Audiostock':
+            open('tmp.mp3', 'wb').write(requests.get(f'{s}/play.mp3').content)
+        elif w == 'YoutubeDL':
+            yd.download([s])
+        elif w == 'Uploader':
+            open('tmp.mp3', 'wb').write(s.getbuffer())
+        src = f'data:audio/mp3;base64,{base64.b64encode(open("tmp.mp3", "rb").read()).decode()}'
+        st.markdown(f'<audio src="{src}" controlslist="nodownload" controls></audio>', True)
+        return librosa.load('tmp.mp3', sr=sr, offset=10, duration=2*sec)[0]
+    except:
+        st.error(f'Error: Unable to access {s}')
+        return numpy.zeros(1)
+
+@st.cache_data(max_entries=2)
+def filter(s, v, a):
+    return [k for k in Z if all(i in S[k] for i in s) and v[0] < V[k][0] < v[1] and a[0] < V[k][1] < a[1]]
+
+@st.cache_data(max_entries=2)
+def center(K):
+    return numpy.mean(numpy.array([Z[k] for k in K]), axis=0)
+
+@st.cache_data(max_entries=1)
+def collate(Y):
+    return numpy.array([pad(stft(trim(y))[:x_n,:seq]) for y in Y])[:,:,:,numpy.newaxis]
+
+yd = YoutubeDL({'outtmpl': 'tmp', 'playlist_items': '1', 'format': 'mp3/bestaudio/best', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}]})
+sp = spotipy.Spotify(auth_manager=spotipy.oauth2.SpotifyClientCredentials(st.secrets['id'], st.secrets['pw']))
+sr = 22050
+fps = 25
+sec = 10
+seq = 256
+z_n = 32
+x_n = 1024
+
+M = load_h5('source/vae.h5')
 Z = load_np('source/vec.npy')
 S = load_np('source/scn.npy')
 V = load_np('source/vad.npy')
 U = load_np('source/url.npy')
-M = load_h5('source/vae.h5')
     
 st.title('EgGMAn')
 st.write('EgGMAn (Engine of Game Music Analysis) retrieves music that has both the worldview of the game and the atmosphere of the scene.')
