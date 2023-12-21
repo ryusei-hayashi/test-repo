@@ -1,28 +1,21 @@
-from gdown import download_folder
 import streamlit as st
-import base64
-import os
-
-if not os.path.exists('docs'):
-    download_folder(id='1oSzl_7l9SuJ32PuG3qDTsbzwCPErgxuA')
 
 st.set_page_config('EgGMAn', ':egg:', 'wide')
 st.sidebar.link_button('Contact Us', 'https://forms.gle/A4vWuEAp4pPEY4sf9', use_container_width=True)
 if st.sidebar.button('Clear Cache', use_container_width=True):
     st.cache_data.clear()
 
-def pdf(f, w, h):
-    #with open(f, "rb") as x:
-     #   d = f'data:application/pdf;base64,{base64.b64encode(x.read()).decode("utf-8")}'
-    st.markdown(f'<iframe src="{f}" width="{w}" height="{h}" type="application/pdf"></iframe>', True)
+def pdf(i, w, h):
+    s = f'https://drive.google.com/file/d/{i}/preview'
+    st.markdown(f'<iframe src="{s}" width="{w}" height="{h}"></iframe>', True)
 
 st.title('Library')
 
 st.header('Paper')
-pdf('docs/paper.pdf', 500, 800)
+pdf('18H8dnbhL-D53BUWb09nGVWGWyot06OM6', 600, 900)
 
 st.header('Slide')
-pdf('docs/slide.pdf', 500, 400)
+pdf('1MIN0am-lZV7TqGx20CjgG1CSQXyLkgOO', 600, 400)
 
 st.header('Panel')
-pdf('docs/panel.pdf', 500, 800)
+pdf('1BY0bn5FWc_d2yoEi4ssPpgdomMCw9fLQ', 600, 900)
