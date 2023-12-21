@@ -157,7 +157,7 @@ def mel(y):
 def pad(y):
     return numpy.pad(y, ((0, x_n-y.shape[0]), (0, seq-y.shape[1])), constant_values=-1e-300)
 
-@st.@st.cache_resource(max_entries=1)
+@st.cache_resource(max_entries=1)
 def load_h5(f):
     m = VAE()
     m(tf.random.normal([1, x_n, seq, 1]))
