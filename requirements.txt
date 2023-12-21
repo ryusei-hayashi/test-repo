@@ -8,6 +8,5 @@ yt-dlp
 pandas
 gdown
 numpy
-os
 
 streamlit==1.29.0
