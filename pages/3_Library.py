@@ -5,4 +5,4 @@ google_drive_link = "https://drive.google.com/file/d/1CElf11tsDnjplpgmkTtW5yUhcX
 
 # iframeで埋め込む
 iframe = f'<iframe src="{google_drive_link}" width="600" height="400"></iframe>'
-st.markdown(iframe, unsafe_allow_html=True)
+st.markdown(iframe, True)
