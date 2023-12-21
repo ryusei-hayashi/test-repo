@@ -42,7 +42,6 @@ Move the coordinate z in the vector q - p direction. Retrieve music near the mov
 * [pandas](https://pandas.pydata.org)
 * [gdown](https://github.com/wkentaro/gdown)
 * [numpy](https://numpy.org)
-* [os](https://docs.python.org/3/library/os.html)
 
 ## Licence
 * [MIT License](https://en.wikipedia.org/wiki/MIT_License)
