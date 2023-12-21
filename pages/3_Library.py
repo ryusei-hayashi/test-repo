@@ -13,7 +13,7 @@ if st.sidebar.button('Clear Cache', use_container_width=True):
 
 def pdf(f, w, h):
     s = f'data:application/pdf;base64,{base64.b64encode(open(f, "rb").read()).decode("utf-8")}'
-    st.markdown(f'<iframe src="{s}" width="{w}" height="{h}" type="application/pdf"></iframe>', True)
+    st.markdown(f'<embed src="{s}" width="{w}" height="{h}" type="application/pdf">', True)
 
 st.title('Library')
 
