@@ -13,7 +13,7 @@ import base64
 import numpy
 import os
 
-if not os.path.exists('source'):
+if not os.path.exists('data'):
     download_folder(id='1jwaqTqRFvQzVMNbvkNrZJn5Mq8WkGxCi')
 
 st.set_page_config('EgGMAn', ':egg:', 'wide')
@@ -207,12 +207,12 @@ seq = 256
 z_n = 32
 x_n = 1024
 
-M = load_h5('source/vae.h5')
-Z = load_np('source/vec.npy')
-S = load_np('source/scn.npy')
-V = load_np('source/vad.npy')
-U = load_np('source/url.npy')
-    
+M = load_h5('data/vae.h5')
+Z = load_np('data/vec.npy')
+S = load_np('data/scn.npy')
+V = load_np('data/vad.npy')
+U = load_np('data/url.npy')
+
 st.title('EgGMAn')
 st.write('EgGMAn (Engine of Game Music Analysis) retrieves music that has both the worldview of the game and the atmosphere of the scene.')
 
