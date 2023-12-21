@@ -12,8 +12,7 @@ if st.sidebar.button('Clear Cache', use_container_width=True):
    st.cache_data.clear()
 
 def pdf(f, w, h):
-    st.markdown(f'<embed src="{f}" width="{w}" height="{h}">', unsafe_allow_html=True)
-
+    st.markdown(f'<embed src="https://drive.google.com/viewerng/viewer?embedded=true&url={f}" width="{w}" height="{h}">', unsafe_allow_html=True)
     #s = f'data:application/pdf;base64,{base64.b64encode(open(f, "rb").read()).decode("utf-8")}'
     #st.markdown(f'<embed src="{s}" width="{w}" height="{h}" type="application/pdf">', True)
 
