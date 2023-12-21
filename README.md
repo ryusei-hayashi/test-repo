@@ -16,16 +16,16 @@ Input the scene of output music. Valence and Arousal are based on [Circumplex mo
 
 ### System
 #### Input Music
-The system converts the input music to the coordinate z in VAE.
+Convert the input music to the coordinate z in VAE.
 
 #### Scene of Input Music
-The system computes the center p of the scene of input music.
+Compute the center p of the scene of input music.
 
 #### Scene of Output Music
-The system computes the center q of the scene of output music. 
+Compute the center q of the scene of output music. 
 
 #### Output Music
-The system moves the coordinate z in the vector q - p direction and retrieves music near the moved coordinate z.
+Move the coordinate z in the vector q - p direction. Retrieve music near the moved coordinate z.
 
 ## Package
 * [ffmpeg](https://ffmpeg.org)
