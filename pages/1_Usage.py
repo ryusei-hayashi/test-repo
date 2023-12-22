@@ -5,10 +5,14 @@ st.sidebar.link_button('Contact Us', 'https://forms.gle/A4vWuEAp4pPEY4sf9', use_
 if st.sidebar.button('Clear Cache', use_container_width=True):
    st.cache_data.clear()
 
+def view(i, w, h):
+    s = f'https://drive.google.com/file/d/{i}/preview'
+    st.markdown(f'<iframe src="{s}" width="{w}" height="{h}"></iframe>', True)
+
 st.title('Usage')
 
 st.header('Video')
-st.write('comming soon') #st.video()
+st.write('comming soon') #view()
 
 st.header('Text')
 
