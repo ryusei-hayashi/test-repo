@@ -12,10 +12,10 @@ def preview(i, w, h):
 st.title('Library')
 
 st.header('Paper')
-preview('18H8dnbhL-D53BUWb09nGVWGWyot06OM6', 600, 900)
+preview('18H8dnbhL-D53BUWb09nGVWGWyot06OM6', 700, 990)
 
 st.header('Slide')
-preview('1MIN0am-lZV7TqGx20CjgG1CSQXyLkgOO', 600, 400)
+preview('1MIN0am-lZV7TqGx20CjgG1CSQXyLkgOO', 700, 420)
 
 st.header('Panel')
-preview('1BY0bn5FWc_d2yoEi4ssPpgdomMCw9fLQ', 600, 900)
+preview('1BY0bn5FWc_d2yoEi4ssPpgdomMCw9fLQ', 700, 990)
