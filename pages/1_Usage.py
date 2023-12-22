@@ -17,14 +17,14 @@ st.write('comming soon') #view()
 st.header('Text')
 
 st.subheader('Input Music')
-st.markdown('-Input music to be used in the created game\n-Choose input way from Spotify API, Audiostock, YoutubeDL, Uploader\n-YoutubeDL has many [Supported sites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)')
+st.markdown('- Input music to be used in the created game\n- Choose input way from Spotify API, Audiostock, YoutubeDL, Uploader\n- YoutubeDL has many [Supported sites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)')
 
 l, r = st.columns(2, gap='medium')
 
 with l:
     st.subheader('Scene of Input Music')
-    st.markdown('-Input the scene of input music\n-Valence and Arousal are based on [Circumplex Model](https://en.wikipedia.org/wiki/Emotion_classification#Circumplex_model)')
+    st.markdown('- Input the scene of input music\n- Valence and Arousal are based on [Circumplex Model](https://en.wikipedia.org/wiki/Emotion_classification#Circumplex_model)')
 
 with r:
     st.subheader('Scene of Output Music')
-    st.markdown('-Input the scene of output music\n-Valence and Arousal are based on [Circumplex Model](https://en.wikipedia.org/wiki/Emotion_classification#Circumplex_model)')
+    st.markdown('- Input the scene of output music\n- Valence and Arousal are based on [Circumplex Model](https://en.wikipedia.org/wiki/Emotion_classification#Circumplex_model)')
