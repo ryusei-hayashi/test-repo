@@ -9,10 +9,10 @@ This repository is for Deploying [EgGMAn](https://ryusei-test-repo.streamlit.app
 Input music to be used in the created game. Choose input way from Spotify API, Audiostock, YoutubeDL, Uploader. YoutubeDL has many [Supported sites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md).
 
 #### Scene of Input Music
-Input the scene of input music. Valence and Arousal are based on [Circumplex model](https://en.wikipedia.org/wiki/Emotion_classification#Circumplex_model).
+Input the scene of input music. Valence and Arousal are based on [Circumplex Model](https://en.wikipedia.org/wiki/Emotion_classification#Circumplex_model).
 
 #### Scene of Output Music
-Input the scene of output music. Valence and Arousal are based on [Circumplex model](https://en.wikipedia.org/wiki/Emotion_classification#Circumplex_model).
+Input the scene of output music. Valence and Arousal are based on [Circumplex Model](https://en.wikipedia.org/wiki/Emotion_classification#Circumplex_Model).
 
 ### System
 #### Input Music
