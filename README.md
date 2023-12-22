@@ -1,12 +1,12 @@
 # Test Repo
-This repository is for Deploying [EgGMAn](https://ryusei-test-repo.streamlit.app).
+This repository is for Deploying [EgGMAn](https://eggman.streamlit.app).
 
 ## EgGMAn
-[EgGMAn](https://ryusei-test-repo.streamlit.app) (Engine of Game Music Analysis) retrieves music that has both the worldview of the game and the atmosphere of the scene.
+[EgGMAn](https://eggman.streamlit.app) (Engine of Game Music Analysis) retrieves music that has both the worldview of the game and the atmosphere of the scene.
 
 ### Usage
 #### Input Music
-Input music to be used in the created game. Choose input way from Spotify API, Audiostock, YoutubeDL, Uploader. YoutubeDL has many [Supported sites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md).
+Input music to be used in the created game. Choose input way from Spotify API, Audiostock, YoutubeDL, Uploader. YoutubeDL has many [Supported Sites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md).
 
 #### Scene of Input Music
 Input the scene of input music. Valence and Arousal are based on [Circumplex Model](https://en.wikipedia.org/wiki/Emotion_classification#Circumplex_model).
