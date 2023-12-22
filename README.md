@@ -25,7 +25,7 @@ Compute the center p of the scene of input music.
 Compute the center q of the scene of output music. 
 
 #### Output Music
-Move the coordinate z in the vector q - p direction. Retrieve music near the moved coordinate z.
+Move the coordinate z in the vector q - p direction and retrieve music near the moved coordinate z.
 
 ## Package
 * [ffmpeg](https://ffmpeg.org)
