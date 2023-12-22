@@ -23,11 +23,11 @@ l, r = st.columns(2, gap='medium')
 
 with l:
     st.subheader('Scene of Input Music')
-    st.markdown('- Collect music for the same scene as the input scene\n- Convert collected music to coordinates\n- Compute the center p of the coordinates')
+    st.markdown('- Collect music for the same scene as the input scene\n- Convert collected music to coordinates in VAE\n- Compute the center p of the coordinates')
 
 with r:
     st.subheader('Scene of Output Music')
-    st.markdown('- Collect music for the same scene as the input scene\n- Convert collected music to coordinates\n- Compute the center q of the coordinates')
+    st.markdown('- Collect music for the same scene as the input scene\n- Convert collected music to coordinates in VAE\n- Compute the center q of the coordinates')
 
 st.subheader('Output Music')
 st.markdown('- Move the coordinate z in the vector q - p direction\n- Retrieve music near the moved coordinate z')
