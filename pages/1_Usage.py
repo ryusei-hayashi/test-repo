@@ -12,7 +12,7 @@ def view(i, w, h):
 st.title('Usage')
 
 st.header('Video')
-st.write('Coming Soon...') #view()
+view('1X0O0hd9EHayuhPaUyPzXYJZljInnRtgO', 700, 420)
 
 st.header('Text')
 
