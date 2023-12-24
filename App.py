@@ -264,4 +264,4 @@ if st.button('Retrieve', type='primary'):
         D = pandas.DataFrame([U[k] for k in sorted(Q, key=lambda k: numpy.linalg.norm(Z[k]-z))[:99]], columns=['URL', 'Name', 'Artist', 'Time'])
         st.dataframe(D, column_config={'URL': st.column_config.LinkColumn()})
     else:
-        st.error('Error: Check the input to make sure it is correct')
+        st.error('Error: There is an input error')
