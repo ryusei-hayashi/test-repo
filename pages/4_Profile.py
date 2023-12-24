@@ -7,7 +7,7 @@ if st.sidebar.button('Clear Cache', use_container_width=True):
 
 def profile(n, a, p, e):
     st.subheader(n)
-    st.markdown(f'- Affiliation: {a}\n- Position: {p}\n- E-Mail: {e}')
+    st.markdown(f'- Affiliation: {a}\n- Position: {p}\n- Mail: {e}')
 
 st.title('Profile')
 
