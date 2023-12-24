@@ -213,7 +213,7 @@ S = load_np('data/scn.npy')
 V = load_np('data/vad.npy')
 U = load_np('data/url.npy')
 
-n = st.text_input('Input Name')
+n = st.text_input('Name')
 
 st.title('Test App')
 st.write('Test App retrieves music that has both the worldview of the game and the atmosphere of the scene.')
