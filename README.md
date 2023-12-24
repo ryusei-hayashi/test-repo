@@ -1,8 +1,8 @@
 # Test Repo
-This repository is for Deploying [EgGMAn](https://eggman.streamlit.app).
+This repository is for Deploying [Test App](https://ryusei-test-app.streamlit.app).
 
-## EgGMAn
-[EgGMAn](https://eggman.streamlit.app) (Engine of Game Music Analysis) retrieves music that has both the worldview of the game and the atmosphere of the scene.
+## Test App
+[Test App](https://ryusei-test-app.streamlit.app) retrieves music that has both the worldview of the game and the atmosphere of the scene.
 
 ### Usage
 #### Input Music
