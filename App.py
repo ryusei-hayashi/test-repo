@@ -16,7 +16,7 @@ import os
 if not os.path.exists('data'):
     download_folder(id='1jwaqTqRFvQzVMNbvkNrZJn5Mq8WkGxCi')
 
-st.set_page_config('EgGMAn', ':egg:', 'wide')
+st.set_page_config('Test App', ':test_tube:', 'wide')
 st.sidebar.link_button('Contact Us', 'https://forms.gle/A4vWuEAp4pPEY4sf9', use_container_width=True)
 if st.sidebar.button('Clear Cache', use_container_width=True):
     st.cache_data.clear()
@@ -213,8 +213,10 @@ S = load_np('data/scn.npy')
 V = load_np('data/vad.npy')
 U = load_np('data/url.npy')
 
-st.title('EgGMAn')
-st.write('EgGMAn (Engine of Game Music Analysis) retrieves music that has both the worldview of the game and the atmosphere of the scene.')
+n = st.text_input('Input Name')
+
+st.title('Test App')
+st.write('Test App retrieves music that has both the worldview of the game and the atmosphere of the scene.')
 
 st.subheader('Input Music')
 w = st.selectbox('Input Way', ['Spotify API', 'Audiostock', 'YoutubeDL', 'Uploader'])
@@ -257,9 +259,9 @@ st.subheader('Output Music')
 if st.button('Retrieve', type='primary'):
     P = filter(sim + tim + wim + bim + pim + qim + aim, vim, zim)
     Q = filter(som + tom + wom + bom + pom + qom + aom, vom, zom)
-    if P and Q:
+    if P and Q and n:
         z = M.get_z(collate([y]))[0] + center(Q) - center(P)
         D = pandas.DataFrame([U[k] for k in sorted(Q, key=lambda k: numpy.linalg.norm(Z[k]-z))[:99]], columns=['URL', 'Name', 'Artist', 'Time'])
         st.dataframe(D, column_config={'URL': st.column_config.LinkColumn()})
     else:
-        st.error('Error: No music to fit the Input Scene')
+        st.error('Error: Check the input to make sure it is correct')
