@@ -1,15 +1,15 @@
-from statistics import mean
-from tensorflow import keras
-from yt_dlp import YoutubeDL
 from gdown import download_folder
+from yt_dlp import YoutubeDL
+from pandas import DataFrame
+from base64 import b64encode
+from tensorflow import keras
+from statistics import mean
+from requests import get
 import tensorflow_probability as tfp
 import tensorflow as tf
 import streamlit as st
-import requests
 import spotipy
 import librosa
-import pandas
-import base64
 import numpy
 import os
 
@@ -18,8 +18,6 @@ if not os.path.exists('data'):
 
 st.set_page_config('Test App', ':test_tube:', 'wide')
 st.sidebar.link_button('Contact Us', 'https://forms.gle/A4vWuEAp4pPEY4sf9', use_container_width=True)
-if st.sidebar.button('Clear Cache', use_container_width=True):
-    st.cache_data.clear()
 
 class Conv1(keras.Model):
     def __init__(self, channel, kernel, stride, padding):
@@ -134,8 +132,39 @@ class VAE(keras.Model):
         y = self.decoder(z)
         return y
 
-    def get_z(self, x):
-        return tf.convert_to_tensor(self.sample(self.encoder(x, training=False))).numpy()
+    def get_z(self, x, v):
+        x = self.encoder(x, training=False)
+        z = tf.convert_to_tensor(self.sample(x)) if v else x[:,:z_n]
+        return z.numpy()
+
+@st.cache_resource(max_entries=1)
+def load_h5(f):
+    m = VAE()
+    m(tf.random.normal([1, x_n, seq, 1]))
+    m.load_weights(f)
+    return m
+
+@st.cache_data(max_entries=4)
+def load_np(f):
+    return numpy.load(f, allow_pickle=True).item()
+
+@st.cache_data(max_entries=1)
+def download(s):
+    try:
+        if w == 'Spotify API':
+            open('tmp.mp3', 'wb').write(get(f'{sp.track(s.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
+        elif w == 'Audiostock':
+            open('tmp.mp3', 'wb').write(get(f'{s}/play.mp3').content)
+        elif w == 'YoutubeDL':
+            yd.download([s])
+        elif w == 'Uploader':
+            open('tmp.mp3', 'wb').write(s.getbuffer())
+        src = f'data:audio/mp3;base64,{b64encode(open("tmp.mp3", "rb").read()).decode()}'
+        st.markdown(f'<audio src="{src}" controlslist="nodownload" controls></audio>', True)
+        return librosa.load('tmp.mp3', sr=sr, offset=10, duration=2*sec)[0]
+    except:
+        st.error(f'Error: Unable to access {s}')
+        return numpy.zeros(1)
 
 def trim(y):
     b = librosa.beat.beat_track(y=y, sr=sr, hop_length=sr//fps)[1]
@@ -160,44 +189,13 @@ def pad(y):
 def collate(Y):
     return numpy.array([pad(stft(trim(y))[:x_n,:seq]) for y in Y])[:,:,:,numpy.newaxis]
 
-@st.cache_resource(max_entries=1)
-def load_h5(f):
-    m = VAE()
-    m(tf.random.normal([1, x_n, seq, 1]))
-    m.load_weights(f)
-    return m
-
-@st.cache_data(max_entries=4)
-def load_np(f):
-    return numpy.load(f, allow_pickle=True).item()
-
-@st.cache_data(max_entries=1)
-def download(s):
-    try:
-        if w == 'Spotify API':
-            open('tmp.mp3', 'wb').write(requests.get(f'{sp.track(s.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
-        elif w == 'Audiostock':
-            open('tmp.mp3', 'wb').write(requests.get(f'{s}/play.mp3').content)
-        elif w == 'YoutubeDL':
-            yd.download([s])
-        elif w == 'Uploader':
-            open('tmp.mp3', 'wb').write(s.getbuffer())
-        src = f'data:audio/mp3;base64,{base64.b64encode(open("tmp.mp3", "rb").read()).decode()}'
-        st.markdown(f'<audio src="{src}" controlslist="nodownload" controls></audio>', True)
-        return librosa.load('tmp.mp3', sr=sr, offset=10, duration=2*sec)[0]
-    except:
-        st.error(f'Error: Unable to access {s}')
-        return numpy.zeros(1)
-
-@st.cache_data(max_entries=2)
 def filter(s, v, a):
     return [k for k in Z if all(i in S[k] for i in s) and v[0] < V[k][0] < v[1] and a[0] < V[k][1] < a[1]]
 
-@st.cache_data(max_entries=2)
 def center(K):
     return numpy.mean(numpy.array([Z[k] for k in K]), axis=0)
 
-yd = YoutubeDL({'outtmpl': 'tmp', 'playlist_items': '1', 'quite': True, 'format': 'mp3/bestaudio/best', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'overwrites': True})
+yd = YoutubeDL({'outtmpl': 'tmp', 'playlist_items': '1', 'quiet': True, 'format': 'mp3/bestaudio/best', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'overwrites': True})
 sp = spotipy.Spotify(auth_manager=spotipy.oauth2.SpotifyClientCredentials(st.secrets['id'], st.secrets['pw']))
 sr = 22050
 fps = 25
@@ -256,11 +254,11 @@ with r:
 
 st.subheader('Output Music')
 if st.button('Retrieve', type='primary'):
-    P = filter(sim + tim + wim + bim + pim + qim + aim, vim, zim)
-    Q = filter(som + tom + wom + bom + pom + qom + aom, vom, zom)
-    if P and Q and n:
-        z = M.get_z(collate([y]))[0] + center(Q) - center(P)
-        D = pandas.DataFrame([U[k] for k in sorted(Q, key=lambda k: numpy.linalg.norm(Z[k]-z))[:99]], columns=['URL', 'Name', 'Artist', 'Time'])
-        st.dataframe(D, column_config={'URL': st.column_config.LinkColumn()})
+    p = filter(sim + tim + wim + bim + pim + qim + aim, vim, zim)
+    q = filter(som + tom + wom + bom + pom + qom + aom, vom, zom)
+    if p and q:
+        z = M.get_z(collate([y]), True)[0] + center(q) - center(p)
+        d = DataFrame([U[k] for k in sorted(q, key=lambda k: numpy.linalg.norm(Z[k]-z))[:50]], columns=['URL', 'Name', 'Artist', 'Time'])
+        st.dataframe(d, column_config={'URL': st.column_config.LinkColumn()})
     else:
-        st.error('Error: There is an input error')
+        st.error('Error: No music to fit the input scene')
