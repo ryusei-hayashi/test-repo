@@ -1,4 +1,3 @@
-from gdown import download_folder
 from yt_dlp import YoutubeDL
 from pandas import DataFrame
 from base64 import b64encode
@@ -10,11 +9,9 @@ import tensorflow as tf
 import streamlit as st
 import spotipy
 import librosa
+import gdown
 import numpy
 import os
-
-if not os.path.exists('data'):
-    download_folder(id='1jwaqTqRFvQzVMNbvkNrZJn5Mq8WkGxCi')
 
 st.set_page_config('Test App', ':test_tube:', 'wide')
 st.sidebar.link_button('Contact Us', 'https://forms.gle/A4vWuEAp4pPEY4sf9', use_container_width=True)
@@ -138,15 +135,15 @@ class VAE(keras.Model):
         return z.numpy()
 
 @st.cache_resource(max_entries=1)
-def load_h5(f):
+def load_h5(i):
     m = VAE()
     m(tf.random.normal([1, x_n, seq, 1]))
-    m.load_weights(f)
+    m.load_weights(gdown.download(id=i))
     return m
 
 @st.cache_data(max_entries=4)
-def load_np(f):
-    return numpy.load(f, allow_pickle=True).item()
+def load_np(i):
+    return numpy.load(gdown.download(id=i), allow_pickle=True).item()
 
 @st.cache_data(ttl='9m')
 def download(m):
@@ -204,11 +201,11 @@ seq = 256
 z_n = 32
 x_n = 1024
 
-M = load_h5('data/vae.h5')
-Z = load_np('data/vec.npy')
-S = load_np('data/scn.npy')
-V = load_np('data/vad.npy')
-U = load_np('data/url.npy')
+M = load_h5('1tvZKtk6a-udoXT68GipNvr3hW2KVbBYP')
+Z = load_np('1eOJVXcW6vB6K_r5FHvbBZqGCkc03Mn1W')
+S = load_np('1EdGHLalOEUlTb2PjvaFXmrFq9gk5kZ7f')
+V = load_np('1H-mLvIWlpZlYAejV4bNVCLXQJLjruN0o')
+U = load_np('1EMcVsf444KTYUzEwhJKUQu7vsLP7-lfY')
 
 n = st.text_input('Name')
 
@@ -260,7 +257,7 @@ if st.button('Retrieve', type='primary'):
         z = M.get_z(collate([y]), True)[0] + center(q) - center(p)
         d = DataFrame([U[k] for k in sorted(q, key=lambda k: numpy.linalg.norm(Z[k]-z))[:50]], columns=['URL', 'Name', 'Artist', 'Time'])
         st.dataframe(d, column_config={'URL': st.column_config.LinkColumn()})
-        a = {'name': n, 'music': m, 'sim': {'s': sim + tim + wim + bim + pim + qim + aim, 'v': vim, 'a': zim}, 'som': {'s': som + tom + wom + bom + pom + qom + aom, 'v': vom, 'a': zom}}
-        print(f'MyLog: {a}')
+        j = {'name': n, 'music': m, 'sim': {'s': sim + tim + wim + bim + pim + qim + aim, 'v': vim, 'a': zim}, 'som': {'s': som + tom + wom + bom + pom + qom + aom, 'v': vom, 'a': zom}}
+        print(f'MyLog: {j}')
     else:
         st.error('Error: No music to fit the input scene')
