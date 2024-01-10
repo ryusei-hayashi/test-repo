@@ -135,15 +135,15 @@ class VAE(keras.Model):
         return z.numpy()
 
 @st.cache_resource(max_entries=1)
-def load_h5(i):
+def load_h5(i, f):
     m = VAE()
     m(tf.random.normal([1, x_n, seq, 1]))
-    m.load_weights(gdown.download(id=i))
+    m.load_weights(f if os.path.exists(f) else gdown.download(id=i))
     return m
 
 @st.cache_data(max_entries=4)
-def load_np(i):
-    return numpy.load(gdown.download(id=i), allow_pickle=True).item()
+def load_np(i, f):
+    return numpy.load(f if os.path.exists(f) else gdown.download(id=i), allow_pickle=True).item()
 
 @st.cache_data(ttl='9m')
 def download(m):
@@ -201,11 +201,11 @@ seq = 256
 z_n = 32
 x_n = 1024
 
-M = load_h5('1tvZKtk6a-udoXT68GipNvr3hW2KVbBYP')
-Z = load_np('1eOJVXcW6vB6K_r5FHvbBZqGCkc03Mn1W')
-S = load_np('1EdGHLalOEUlTb2PjvaFXmrFq9gk5kZ7f')
-V = load_np('1H-mLvIWlpZlYAejV4bNVCLXQJLjruN0o')
-U = load_np('1EMcVsf444KTYUzEwhJKUQu7vsLP7-lfY')
+Z = load_np('1eOJVXcW6vB6K_r5FHvbBZqGCkc03Mn1W', 'vec.npy')
+S = load_np('1EdGHLalOEUlTb2PjvaFXmrFq9gk5kZ7f', 'scn.npy')
+V = load_np('1H-mLvIWlpZlYAejV4bNVCLXQJLjruN0o', 'vad.npy')
+U = load_np('1EMcVsf444KTYUzEwhJKUQu7vsLP7-lfY', 'url.npy')
+N = load_h5('1tvZKtk6a-udoXT68GipNvr3hW2KVbBYP', 'vae.h5')
 
 n = st.text_input('Name')
 
