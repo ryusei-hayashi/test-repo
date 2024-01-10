@@ -149,21 +149,21 @@ def load_np(f):
     return numpy.load(f, allow_pickle=True).item()
 
 @st.cache_data(ttl='9m')
-def download(s):
+def download(m):
     try:
         if w == 'Spotify API':
-            open('tmp.mp3', 'wb').write(get(f'{sp.track(s.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
+            open('tmp.mp3', 'wb').write(get(f'{sp.track(m.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
         elif w == 'Audiostock':
-            open('tmp.mp3', 'wb').write(get(f'{s}/play.mp3').content)
+            open('tmp.mp3', 'wb').write(get(f'{m}/play.mp3').content)
         elif w == 'YoutubeDL':
-            yd.download([s])
+            yd.download([m])
         elif w == 'Uploader':
-            open('tmp.mp3', 'wb').write(s.getbuffer())
+            open('tmp.mp3', 'wb').write(m.getbuffer())
         src = f'data:audio/mp3;base64,{b64encode(open("tmp.mp3", "rb").read()).decode()}'
         st.markdown(f'<audio src="{src}" controlslist="nodownload" controls></audio>', True)
         return librosa.load('tmp.mp3', sr=sr, offset=10, duration=2*sec)[0]
     except:
-        st.error(f'Error: Unable to access {s}')
+        st.error(f'Error: Unable to access {m}')
         return numpy.zeros(1)
 
 def trim(y):
@@ -218,11 +218,11 @@ st.write('Test App retrieves music that has both the worldview of the game and t
 st.subheader('Input Music')
 w = st.selectbox('Input Way', ['Spotify API', 'Audiostock', 'YoutubeDL', 'Uploader'])
 if w == 'Uploader':
-    s = st.file_uploader('Upload File')
+    m = st.file_uploader('Upload File')
 else:
-    s = st.text_input('Input URL')
-if s:
-    y = download(s)
+    m = st.text_input('Input URL')
+if m:
+    y = download(m)
     if os.path.exists('tmp.mp3'):
         os.remove('tmp.mp3')
 
@@ -260,5 +260,7 @@ if st.button('Retrieve', type='primary'):
         z = M.get_z(collate([y]), True)[0] + center(q) - center(p)
         d = DataFrame([U[k] for k in sorted(q, key=lambda k: numpy.linalg.norm(Z[k]-z))[:50]], columns=['URL', 'Name', 'Artist', 'Time'])
         st.dataframe(d, column_config={'URL': st.column_config.LinkColumn()})
+        a = {'name': n, 'music': m, 'sim': {'s': sim + tim + wim + bim + pim + qim + aim, 'v': vim, 'a': zim}, 'som': {'s': som + tom + wom + bom + pom + qom + aom, 'v': vom, 'a': zom}}
+        print(f'MyLog: {a}')
     else:
         st.error('Error: No music to fit the input scene')
