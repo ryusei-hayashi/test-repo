@@ -4,6 +4,9 @@ from base64 import b64encode
 from tensorflow import keras
 from statistics import mean
 from requests import get
+from time import sleep
+from sys import stderr
+from re import sub
 import tensorflow_probability as tfp
 import tensorflow as tf
 import streamlit as st
@@ -134,34 +137,13 @@ class VAE(keras.Model):
         z = tf.convert_to_tensor(self.sample(x)) if v else x[:,:z_n]
         return z.numpy()
 
-@st.cache_resource(max_entries=1)
-def load_h5(i, f):
-    m = VAE()
-    m(tf.random.normal([1, x_n, seq, 1]))
-    m.load_weights(f if os.path.exists(f) else gdown.download(id=i))
-    return m
-
-@st.cache_data(max_entries=4)
-def load_np(i, f):
-    return numpy.load(f if os.path.exists(f) else gdown.download(id=i), allow_pickle=True).item()
-
-@st.cache_data(ttl='9m')
-def download(m):
-    try:
-        if w == 'Spotify API':
-            open('tmp.mp3', 'wb').write(get(f'{sp.track(m.replace("intl-ja/", ""))["preview_url"]}.mp3').content)
-        elif w == 'Audiostock':
-            open('tmp.mp3', 'wb').write(get(f'{m}/play.mp3').content)
-        elif w == 'YoutubeDL':
-            yd.download([m])
-        elif w == 'Uploader':
-            open('tmp.mp3', 'wb').write(m.getbuffer())
-        src = f'data:audio/mp3;base64,{b64encode(open("tmp.mp3", "rb").read()).decode()}'
-        st.markdown(f'<audio src="{src}" controlslist="nodownload" controls></audio>', True)
-        return librosa.load('tmp.mp3', sr=sr, offset=10, duration=2*sec)[0]
-    except:
-        st.error(f'Error: Unable to access {m}')
-        return numpy.zeros(1)
+def download(i, o):
+    while not os.path.exists(o):
+        try:
+            if not gdown.download(id=i, output=o):
+                sleep(1)
+        except:
+            sleep(1)
 
 def trim(y):
     b = librosa.beat.beat_track(y=y, sr=sr, hop_length=sr//fps)[1]
@@ -192,6 +174,36 @@ def filter(s, v, a):
 def center(K):
     return numpy.mean(numpy.array([Z[k] for k in K]), axis=0)
 
+@st.cache_resource(max_entries=1)
+def load_vae(i, o):
+    download(i, o)
+    m = VAE()
+    m(tf.random.normal([1, x_n, seq, 1]))
+    m.load_weights(o)
+    return m
+
+@st.cache_data(max_entries=4)
+def load_npy(i, o):
+    download(i, o)
+    return numpy.load(o, allow_pickle=True).item()
+
+@st.cache_data(ttl='9m')
+def load_mp3(m):
+    try:
+        if w == 'Spotify API':
+            open('tmp.mp3', 'wb').write(get(f'{sp.track(sub("intl-.*?/", "", m))["preview_url"]}.mp3').content)
+        elif w == 'Audiostock':
+            open('tmp.mp3', 'wb').write(get(f'{m}/play.mp3').content)
+        elif w == 'YoutubeDL':
+            yd.download([m])
+        elif w == 'Uploader':
+            open('tmp.mp3', 'wb').write(m.getbuffer())
+        src = f'data:audio/mp3;base64,{b64encode(open("tmp.mp3", "rb").read()).decode()}'
+        st.markdown(f'<audio src="{src}" controlslist="nodownload" controls></audio>', True)
+        return librosa.load('tmp.mp3', sr=sr, offset=10, duration=2*sec)[0]
+    except:
+        st.error(f'Error: Unable to access {m}')
+
 yd = YoutubeDL({'outtmpl': 'tmp', 'playlist_items': '1', 'quiet': True, 'format': 'mp3/bestaudio/best', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'overwrites': True})
 sp = spotipy.Spotify(auth_manager=spotipy.oauth2.SpotifyClientCredentials(st.secrets['id'], st.secrets['pw']))
 sr = 22050
@@ -201,11 +213,11 @@ seq = 256
 z_n = 32
 x_n = 1024
 
-Z = load_np('1eOJVXcW6vB6K_r5FHvbBZqGCkc03Mn1W', 'vec.npy')
-S = load_np('1EdGHLalOEUlTb2PjvaFXmrFq9gk5kZ7f', 'scn.npy')
-V = load_np('1H-mLvIWlpZlYAejV4bNVCLXQJLjruN0o', 'vad.npy')
-U = load_np('1EMcVsf444KTYUzEwhJKUQu7vsLP7-lfY', 'url.npy')
-N = load_h5('1tvZKtk6a-udoXT68GipNvr3hW2KVbBYP', 'vae.h5')
+M = load_vae('1tvZKtk6a-udoXT68GipNvr3hW2KVbBYP', 'vae.h5')
+Z = load_npy('1eOJVXcW6vB6K_r5FHvbBZqGCkc03Mn1W', 'vec.npy')
+S = load_npy('1EdGHLalOEUlTb2PjvaFXmrFq9gk5kZ7f', 'scn.npy')
+V = load_npy('1H-mLvIWlpZlYAejV4bNVCLXQJLjruN0o', 'vad.npy')
+U = load_npy('1EMcVsf444KTYUzEwhJKUQu7vsLP7-lfY', 'url.npy')
 
 n = st.text_input('Name')
 
@@ -219,7 +231,7 @@ if w == 'Uploader':
 else:
     m = st.text_input('Input URL')
 if m:
-    y = download(m)
+    y = load_mp3(m)
     if os.path.exists('tmp.mp3'):
         os.remove('tmp.mp3')
 
@@ -257,7 +269,6 @@ if st.button('Retrieve', type='primary'):
         z = M.get_z(collate([y]), True)[0] + center(q) - center(p)
         d = DataFrame([U[k] for k in sorted(q, key=lambda k: numpy.linalg.norm(Z[k]-z))[:50]], columns=['URL', 'Name', 'Artist', 'Time'])
         st.dataframe(d, column_config={'URL': st.column_config.LinkColumn()})
-        j = {'name': n, 'music': m, 'sim': {'s': sim + tim + wim + bim + pim + qim + aim, 'v': vim, 'a': zim}, 'som': {'s': som + tom + wom + bom + pom + qom + aom, 'v': vom, 'a': zom}}
-        print(f'MyLog: {j}')
+        print({'name': n, 'music': m, 'sim': {'s': sim + tim + wim + bim + pim + qim + aim, 'v': vim, 'a': zim}, 'som': {'s': som + tom + wom + bom + pom + qom + aom, 'v': vom, 'a': zom}}, file=stderr)
     else:
-        st.error('Error: No music to fit the input scene')
+        st.error('Error: There is an input error')
