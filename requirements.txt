@@ -7,6 +7,9 @@ librosa
 yt-dlp
 pandas
 gdown
+sleep
 numpy
+sys
+re
 
 streamlit==1.29.0
