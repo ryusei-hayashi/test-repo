@@ -7,7 +7,7 @@ This repository is for Deploying [Test App](https://ryusei-test-app.streamlit.ap
 ### Usage
 #### Input Music
 - Input music to be used in the created game
-- Choose input way from Spotify API, Audiostock, YoutubeDL, Uploader
+- Choose input way from Spotify API, Audiostock, YoutubeDL
 - YoutubeDL has many [Supported Sites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)
 
 #### Scene of Input Music
