@@ -7,8 +7,8 @@ librosa
 yt-dlp
 pandas
 gdown
-sleep
 numpy
+time
 sys
 re
 
