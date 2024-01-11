@@ -141,9 +141,9 @@ def download(i, o):
     while not os.path.exists(o):
         try:
             if not gdown.download(id=i, output=o):
-                sleep(1)
+                sleep(9)
         except:
-            sleep(1)
+            sleep(9)
 
 def trim(y):
     b = librosa.beat.beat_track(y=y, sr=sr, hop_length=sr//fps)[1]
@@ -196,11 +196,9 @@ def load_mp3(m):
             open('tmp.mp3', 'wb').write(get(f'{m}/play.mp3').content)
         elif w == 'YoutubeDL':
             yd.download([m])
-        elif w == 'Uploader':
-            open('tmp.mp3', 'wb').write(m.getbuffer())
         src = f'data:audio/mp3;base64,{b64encode(open("tmp.mp3", "rb").read()).decode()}'
         st.markdown(f'<audio src="{src}" controlslist="nodownload" controls></audio>', True)
-        return librosa.load('tmp.mp3', sr=sr, offset=10, duration=2*sec)[0]
+        return librosa.load('tmp.mp3', sr=sr, offset=9, duration=2*sec)[0]
     except:
         st.error(f'Error: Unable to access {m}')
 
@@ -213,11 +211,11 @@ seq = 256
 z_n = 32
 x_n = 1024
 
-M = load_vae('1tvZKtk6a-udoXT68GipNvr3hW2KVbBYP', 'vae.h5')
 Z = load_npy('1eOJVXcW6vB6K_r5FHvbBZqGCkc03Mn1W', 'vec.npy')
 S = load_npy('1EdGHLalOEUlTb2PjvaFXmrFq9gk5kZ7f', 'scn.npy')
 V = load_npy('1H-mLvIWlpZlYAejV4bNVCLXQJLjruN0o', 'vad.npy')
 U = load_npy('1EMcVsf444KTYUzEwhJKUQu7vsLP7-lfY', 'url.npy')
+M = load_vae('1tvZKtk6a-udoXT68GipNvr3hW2KVbBYP', 'vae.h5')
 
 n = st.text_input('Name')
 
@@ -225,11 +223,8 @@ st.title('Test App')
 st.write('Test App retrieves music that has both the worldview of the game and the atmosphere of the scene.')
 
 st.subheader('Input Music')
-w = st.selectbox('Input Way', ['Spotify API', 'Audiostock', 'YoutubeDL', 'Uploader'])
-if w == 'Uploader':
-    m = st.file_uploader('Upload File')
-else:
-    m = st.text_input('Input URL')
+w = st.selectbox('Input Way', ['Spotify API', 'Audiostock', 'YoutubeDL'])
+m = st.text_input('Input URL')
 if m:
     y = load_mp3(m)
     if os.path.exists('tmp.mp3'):
@@ -265,7 +260,7 @@ st.subheader('Output Music')
 if st.button('Retrieve', type='primary'):
     p = filter(sim + tim + wim + bim + pim + qim + aim, vim, zim)
     q = filter(som + tom + wom + bom + pom + qom + aom, vom, zom)
-    if p and q:
+    if p and q and n:
         z = M.get_z(collate([y]), True)[0] + center(q) - center(p)
         d = DataFrame([U[k] for k in sorted(q, key=lambda k: numpy.linalg.norm(Z[k]-z))[:50]], columns=['URL', 'Name', 'Artist', 'Time'])
         st.dataframe(d, column_config={'URL': st.column_config.LinkColumn()})
