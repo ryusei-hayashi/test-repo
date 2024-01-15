@@ -257,7 +257,7 @@ if st.button('Retrieve', type='primary'):
     p = filter(sim + tim + wim + bim + pim + qim + aim, vim, zim)
     q = filter(som + tom + wom + bom + pom + qom + aom, vom, zom)
     if p and q and n:
-        z = M.get_z(collate([y]), True)[0] + center(q) - center(p)
+        z = M.get_z(collate([y]), False)[0] + center(q) - center(p)
         d = DataFrame([U[k] for k in sorted(q, key=lambda k: numpy.linalg.norm(Z[k]-z))[:50]], columns=['URL', 'Name', 'Artist', 'Time'])
         st.dataframe(d, column_config={'URL': st.column_config.LinkColumn()})
         print({'name': n, 'music': m, 'sim': {'s': sim + tim + wim + bim + pim + qim + aim, 'v': vim, 'a': zim}, 'som': {'s': som + tom + wom + bom + pom + qom + aom, 'v': vom, 'a': zom}}, file=stderr)
