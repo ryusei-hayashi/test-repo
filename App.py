@@ -15,7 +15,7 @@ import librosa
 import numpy
 import os
 
-st.set_page_config('Test App', ':test_tube:', 'wide')
+st.set_page_config('EgGMAn', ':test_tube:', 'wide')
 st.sidebar.link_button('Contact Us', 'https://forms.gle/A4vWuEAp4pPEY4sf9', use_container_width=True)
 
 class Conv1(keras.Model):
@@ -215,8 +215,8 @@ U = load_npy('url.npy')
 
 n = st.text_input('Name')
 
-st.title('Test App')
-st.write('Test App retrieves music that has both the worldview of the game and the atmosphere of the scene.')
+st.title('EgGMAn')
+st.write('EgGMAn retrieves music that has both the worldview of the game and the atmosphere of the scene.')
 
 st.subheader('Input Music')
 w = st.selectbox('Input Way', ['Spotify API', 'Audiostock', 'YoutubeDL'])
