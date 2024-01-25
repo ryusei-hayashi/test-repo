@@ -214,6 +214,8 @@ V = load_npy('vad.npy')
 U = load_npy('url.npy')
 
 n = st.text_input('Name')
+if not n:
+    st.error('Error: No name')
 
 st.title('Test App')
 st.write('Test App retrieves music that has both the worldview of the game and the atmosphere of the scene.')
