@@ -216,7 +216,7 @@ U = load_npy('url.npy')
 n = st.text_input('Name')
 
 st.title('EgGMAn')
-st.write('EgGMAn retrieves music that has both the worldview of the game and the atmosphere of the scene.')
+st.write('EgGMAn (Engine of Game Music Analysis) retrieves music that has both the worldview of the game and the atmosphere of the scene.')
 
 st.subheader('Input Music')
 w = st.selectbox('Input Way', ['Spotify API', 'Audiostock', 'YoutubeDL'])
