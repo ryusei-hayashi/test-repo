@@ -185,18 +185,20 @@ def load_npy(n):
 
 @st.cache_data(ttl='9m')
 def load_mp3(m):
-    try:
-        if w == 'Spotify API':
-            open('tmp.mp3', 'wb').write(get(f'{sp.track(sub("intl-.*?/", "", m))["preview_url"]}.mp3').content)
-        elif w == 'Audiostock':
-            open('tmp.mp3', 'wb').write(get(f'{m}/play.mp3').content)
-        elif w == 'YoutubeDL':
-            yd.download([m])
-        src = f'data:audio/mp3;base64,{b64encode(open("tmp.mp3", "rb").read()).decode()}'
-        st.markdown(f'<audio src="{src}" controlslist="nodownload" controls></audio>', True)
-        return librosa.load('tmp.mp3', sr=sr, offset=9, duration=2*sec)[0]
-    except:
-        st.error(f'Error: Unable to access {m}')
+    if m:
+        try:
+            if w == 'Spotify API':
+                open('tmp.mp3', 'wb').write(get(f'{sp.track(sub("intl-.*?/", "", m))["preview_url"]}.mp3').content)
+            elif w == 'Audiostock':
+                open('tmp.mp3', 'wb').write(get(f'{m}/play.mp3').content)
+            elif w == 'YoutubeDL':
+                yd.download([m])
+            src = f'data:audio/mp3;base64,{b64encode(open("tmp.mp3", "rb").read()).decode()}'
+            st.markdown(f'<audio src="{src}" controlslist="nodownload" controls></audio>', True)
+            return librosa.load('tmp.mp3', sr=sr, offset=9, duration=2*sec)[0]
+        except:
+            st.error(f'Error: Unable to access {m}')
+    return 0
 
 yd = YoutubeDL({'outtmpl': 'tmp', 'playlist_items': '1', 'quiet': True, 'format': 'mp3/bestaudio/best', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'overwrites': True})
 sp = spotipy.Spotify(auth_manager=spotipy.oauth2.SpotifyClientCredentials(st.secrets['id'], st.secrets['pw']))
@@ -221,10 +223,9 @@ st.write('EgGMAn (Engine of Game Music Analysis) retrieves music that has both t
 st.subheader('Input Music')
 w = st.selectbox('Input Way', ['Spotify API', 'Audiostock', 'YoutubeDL'])
 m = st.text_input('Input URL')
-if m:
-    y = load_mp3(m)
-    if os.path.exists('tmp.mp3'):
-        os.remove('tmp.mp3')
+y = load_mp3(m)
+if os.path.exists('tmp.mp3'):
+    os.remove('tmp.mp3')
 
 l, r = st.columns(2, gap='medium')
 
