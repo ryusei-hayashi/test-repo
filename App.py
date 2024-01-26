@@ -256,14 +256,17 @@ with r:
 st.subheader('Output Music')
 if st.button('Retrieve', type='primary'):
     if n:
-        p = filter(sim + tim + wim + bim + pim + qim + aim, vim, zim)
-        q = filter(som + tom + wom + bom + pom + qom + aom, vom, zom)
-        if p and q:
-            z = M.get_z(collate([y]), False)[0] + center(q) - center(p)
-            d = DataFrame([U[k] for k in sorted(q, key=lambda k: numpy.linalg.norm(Z[k]-z))[:50]], columns=['URL', 'Name', 'Artist', 'Time'])
-            st.dataframe(d, column_config={'URL': st.column_config.LinkColumn()})
-            print({'name': n, 'music': m, 'sim': {'s': sim + tim + wim + bim + pim + qim + aim, 'v': vim, 'a': zim}, 'som': {'s': som + tom + wom + bom + pom + qom + aom, 'v': vom, 'a': zom}}, file=stderr)
+        if y:
+            p = filter(sim + tim + wim + bim + pim + qim + aim, vim, zim)
+            q = filter(som + tom + wom + bom + pom + qom + aom, vom, zom)
+            if p and q:
+                z = M.get_z(collate([y]), False)[0] + center(q) - center(p)
+                d = DataFrame([U[k] for k in sorted(q, key=lambda k: numpy.linalg.norm(Z[k]-z))[:50]], columns=['URL', 'Name', 'Artist', 'Time'])
+                st.dataframe(d, column_config={'URL': st.column_config.LinkColumn()})
+                print({'name': n, 'music': m, 'sim': {'s': sim + tim + wim + bim + pim + qim + aim, 'v': vim, 'a': zim}, 'som': {'s': som + tom + wom + bom + pom + qom + aom, 'v': vom, 'a': zom}}, file=stderr)
+            else:
+                st.error('Error: Too many conditions')
         else:
-            st.error('Error: No music to fit the input scene')
+            st.error('Error: No input music')
     else:
         st.error('Error: No name')
