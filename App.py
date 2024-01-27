@@ -256,7 +256,7 @@ with r:
 st.subheader('Output Music')
 if st.button('Retrieve', type='primary'):
     if n:
-        if not y == 0:
+        if type(y) == numpy.ndarray:
             p = filter(sim + tim + wim + bim + pim + qim + aim, vim, zim)
             q = filter(som + tom + wom + bom + pom + qom + aom, vom, zom)
             if p and q:
